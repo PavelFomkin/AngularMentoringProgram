@@ -1,0 +1,13 @@
+<header>
+  <a id="logo" routerLink="">
+    <img src="/assets/images/logo.png" alt="Logo">
+  </a>
+  <nav class="header-nav" *ngIf="isLoggedIn(); else noAuth">
+    <a (click)="signOut()" routerLink="login">Log Out</a>
+  </nav>
+  <ng-template #noAuth>
+    <nav class="header-nav">
+      <a routerLink="login">Log In</a>
+    </nav>
+  </ng-template>
+</header>

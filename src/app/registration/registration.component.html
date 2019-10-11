@@ -1,0 +1,21 @@
+<div class="registration-form">
+  <p *ngIf="error !== null">{{error}}</p>
+  <form name="registrationForm" (ngSubmit)="register()" #registrationForm="ngForm">
+    <div class="main">
+      <div class="field">
+        <p>Логин:</p>
+        <input type="text" name="login" [(ngModel)]="username" required>
+      </div>
+      <div class="field">
+        <p>Пароль:</p>
+        <input type="password" name="password" [(ngModel)]="password" required>
+      </div>
+      <div class="field">
+        <p>Повторите пароль:</p>
+        <input type="password" name="repeatedPassword" [(ngModel)]="repeatedPassword" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-sm btn-custom" [disabled]="registrationForm.form.invalid">Зарегистрироваться
+    </button>
+  </form>
+</div>

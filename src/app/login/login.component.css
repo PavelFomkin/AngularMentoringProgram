@@ -1,0 +1,9 @@
+.login-form {
+  width: 368px;
+  height: 298px;
+  margin-top: 85px;
+  margin-left: calc(50% - 184px);
+  border-radius: 6px;
+  box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  background-color: #ffffff;
+}
