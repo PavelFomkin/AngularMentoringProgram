@@ -1,31 +1,9 @@
 .registration-form {
-  margin: 50px 0 0 100px;
-  opacity: 0.8;
-  height: 220px;
-  width: 400px;
-  background-size: 100%;
-  background-blend-mode: multiply;
-  padding: 20px;
-}
-
-.registration-form p {
-  font-family: 'Courier New';
-  float: left;
-  padding-right: 10px;
-}
-
-.registration-form form button {
-  float: right;
-  margin-right: 10px;
-  margin-top: 10px;
-}
-
-.field {
-  clear: both;
-  text-align: right;
-  line-height: 25px;
-}
-
-.main {
-  float: left;
+  width: 368px;
+  height: 298px;
+  margin-top: 85px;
+  margin-left: calc(50% - 184px);
+  border-radius: 6px;
+  box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  background-color: #ffffff;
 }

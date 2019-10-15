@@ -1,5 +1,4 @@
 <div class="login-form">
-  <p *ngIf="error !== null">{{error}}</p>
   <form name="loginForm" (ngSubmit)="login()" #loginForm="ngForm">
     <div class="main">
       <div class="field">
@@ -14,4 +13,5 @@
     <button type="submit" class="btn btn-sm btn-custom" [disabled]="loginForm.form.invalid">Войти</button>
   </form>
   <button type="button" class="btn btn-sm btn-custom" (click)="redirectToRegisterPage()">Зарегистрироваться</button>
+  <p *ngIf="error !== null">{{error}}</p>
 </div>

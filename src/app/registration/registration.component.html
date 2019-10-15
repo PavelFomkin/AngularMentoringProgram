@@ -1,5 +1,4 @@
 <div class="registration-form">
-  <p *ngIf="error !== null">{{error}}</p>
   <form name="registrationForm" (ngSubmit)="register()" #registrationForm="ngForm">
     <div class="main">
       <div class="field">
@@ -18,4 +17,5 @@
     <button type="submit" class="btn btn-sm btn-custom" [disabled]="registrationForm.form.invalid">Зарегистрироваться
     </button>
   </form>
+  <p *ngIf="error !== null">{{error}}</p>
 </div>
