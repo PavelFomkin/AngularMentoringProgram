@@ -1,0 +1,5 @@
+#container {
+  min-height: calc(100% - 64px);
+  position: relative;
+  padding-bottom: 64px; /* footer height */
+}

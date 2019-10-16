@@ -1,9 +1,41 @@
-.registration-form {
-  width: 368px;
-  height: 298px;
-  margin-top: 85px;
-  margin-left: calc(50% - 184px);
+#registration-form-container {
+  display: contents;
+  position: relative;
+}
+
+#registration-form {
   border-radius: 6px;
   box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
   background-color: #ffffff;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-family: SourceSansPro, serif;
+  padding: 0 20px 20px 20px;
+  min-width: 260px;
+}
+
+.field {
+  padding-bottom: 10px;
+}
+
+.field label {
+  font-size: medium;
+}
+
+.field input {
+  min-width: 250px;
+  height: 20px;
+  padding-left: 5px;
+  margin: 5px 0;
+}
+
+#buttons {
+  float: right;
+  display: grid;
+}
+
+#buttons button {
+  margin: 5px;
 }

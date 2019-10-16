@@ -7,14 +7,14 @@ import {FooterComponent} from './footer/footer.component';
 import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
 import {CourseComponent} from './course/course.component';
 import {CoursesComponent} from './courses/courses.component';
-import {CoursesPageComponent} from './pages/courses-page/courses-page.component';
 import {RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatMenuModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
+import {LoginComponent} from './login/login.component';
+import {RegistrationComponent} from './registration/registration.component';
+import {ActionsComponent} from './actions/actions.component';
+import {SearchComponent} from './search/search.component';
 
 const routes = [
   {path: '', component: CoursesComponent},
@@ -30,10 +30,10 @@ const routes = [
     BreadcrumbComponent,
     CourseComponent,
     CoursesComponent,
-    CoursesPageComponent,
-    LoginPageComponent,
     LoginComponent,
     RegistrationComponent,
+    ActionsComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

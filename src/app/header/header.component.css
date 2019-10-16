@@ -19,20 +19,16 @@
   margin: 24px 5px;
   font: menu;
   color: white;
+
 }
-
-/*#pages li {*/
-  /*display: inline-block;*/
-  /*padding: 25px;*/
-/*}*/
-
-/*@media screen and (min-width: 640px) {*/
-  /*#burger-menu {*/
-    /*display: none;*/
-  /*}*/
-/*}*/
 
 header {
   height: 64px;
   background-color: #414452;
+}
+
+.smallIcon {
+  height: 16px;
+  float: left;
+  padding-right: 5px;
 }

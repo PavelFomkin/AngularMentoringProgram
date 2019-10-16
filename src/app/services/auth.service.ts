@@ -2,12 +2,12 @@ import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
 
 export enum Alert {
-  BAD_CREDENTIALS = "Wrong login or password",
-  PASSWORDS_ARE_DIFFERENT = "Passwords must be the same",
-  USER_HAS_ALREADY_EXIST = "The user has already exist",
+  BAD_CREDENTIALS = 'Wrong login or password',
+  PASSWORDS_ARE_DIFFERENT = 'Passwords must be the same',
+  USER_HAS_ALREADY_EXIST = 'The user has already exist',
 }
 
-export const currentUser = "currentUser";
+export const currentUser = 'currentUser';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): Alert {
-    let userPassword = localStorage.getItem(username);
+    const userPassword = localStorage.getItem(username);
     if (password !== null && password === userPassword) {
       localStorage.setItem(currentUser, username);
 

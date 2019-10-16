@@ -21,4 +21,8 @@ export class RegistrationComponent implements OnInit {
   register() {
     this.error = this.authService.register(this.username, this.password, this.repeatedPassword);
   }
+
+  goBack() {
+    window.history.back();
+  }
 }
