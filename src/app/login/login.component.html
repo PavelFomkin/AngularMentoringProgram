@@ -1,20 +1,22 @@
 <div id="login-form-container">
   <div id="login-form">
-    <h3>Login</h3>
-    <h5 class="error-message" *ngIf="error !== null">{{error}}</h5>
+    <div>
+      <h3 class="auth-form-name">Login</h3>
+      <h5 class="error-message" *ngIf="error !== null">{{error}}</h5>
+    </div>
     <form name="loginForm" (ngSubmit)="login()" #loginForm="ngForm">
       <div class="field">
-        <label for="login">E-mail: </label><br/>
-        <input id="login" type="text" name="login" [(ngModel)]="username" required><br/>
+        <label for="login">E-mail: </label> <label class="required-label">*required</label>
+        <input class="form-control" id="login" name="login" type="text" placeholder="Enter e-mail" [(ngModel)]="username" required>
       </div>
       <div class="field">
-        <label for="password">Password: </label><br/>
-        <input id="password" type="password" name="password" [(ngModel)]="password" required><br/>
+        <label for="password">Password: </label> <label class="required-label">*required</label>
+        <input class="form-control" id="password" name="password" type="password" placeholder="Enter password" [(ngModel)]="password" required>
       </div>
       <a id="forgot-password" routerLink="/registration">Forgot password?</a>
       <div id="buttons">
-        <button id="submit-button" type="submit" class="btn btn-sm btn-custom" [disabled]="loginForm.form.invalid">Login</button>
-        <button id="registration-button" type="button" class="btn btn-sm btn-custom" (click)="redirectToRegisterPage()">Registration</button>
+        <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="loginForm.form.invalid">Login</button>
+        <button id="registration-button" type="button" class="btn btn-sm btn-success" (click)="redirectToRegisterPage()">Registration</button>
       </div>
     </form>
   </div>

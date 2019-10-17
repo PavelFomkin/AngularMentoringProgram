@@ -2,7 +2,7 @@ import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
 
 export enum Alert {
-  BAD_CREDENTIALS = 'Wrong login or password',
+  BAD_CREDENTIALS = 'Wrong e-mail or password',
   PASSWORDS_ARE_DIFFERENT = 'Passwords must be the same',
   USER_HAS_ALREADY_EXIST = 'The user has already exist',
 }

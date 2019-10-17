@@ -12,30 +12,15 @@
   left: 50%;
   transform: translate(-50%, 0);
   font-family: SourceSansPro, serif;
-  padding: 0 20px 20px 20px;
-  min-width: 260px;
+  padding: 20px;
+  min-width: 350px;
+  display: grid;
 }
 
 .field {
   padding-bottom: 10px;
 }
 
-.field label {
-  font-size: medium;
-}
-
-.field input {
-  min-width: 250px;
-  height: 20px;
-  padding-left: 5px;
-  margin: 5px 0;
-}
-
-#buttons {
+#register {
   float: right;
-  display: grid;
-}
-
-#buttons button {
-  margin: 5px;
 }
