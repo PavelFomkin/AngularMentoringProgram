@@ -15,11 +15,14 @@ import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {ActionsComponent} from './actions/actions.component';
 import {SearchComponent} from './search/search.component';
+import {AuthGuard} from './services/auth.guard';
+import { CreateCourseComponent } from './create-course/create-course.component';
 
 const routes = [
   {path: '', component: CoursesComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'registration', component: RegistrationComponent}
+  {path: 'registration', component: RegistrationComponent},
+  {path: 'create-course', component: CreateCourseComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
@@ -34,6 +37,7 @@ const routes = [
     RegistrationComponent,
     ActionsComponent,
     SearchComponent,
+    CreateCourseComponent,
   ],
   imports: [
     BrowserModule,
