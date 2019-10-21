@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BreadcrumbLink} from '../entities/breadcrumb-link';
+import {BreadcrumbLink} from '../../entities/breadcrumb-link';
 
 @Component({
   selector: 'app-breadcrumb',

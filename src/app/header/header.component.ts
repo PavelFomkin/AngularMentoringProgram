@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthService} from '../services/auth.service';
+import {AuthService} from '../auth-module/services/auth.service';
 
 export interface Link {url: string, name: string}
 

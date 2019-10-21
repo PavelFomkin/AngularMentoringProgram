@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {BreadcrumbLink} from '../entities/breadcrumb-link';
+import {BreadcrumbLink} from '../../entities/breadcrumb-link';
+import {Course} from '../../entities/course';
 
 @Component({
   selector: 'app-create-course',
@@ -12,10 +13,12 @@ export class CreateCourseComponent implements OnInit {
     {title: 'Courses', url: '/courses'},
     {title: 'New Course', url: '/create-course'},
   ];
-
-  constructor() { }
+  newCourse: Course;
 
   ngOnInit() {
   }
 
+  createCourse() {
+
+  }
 }

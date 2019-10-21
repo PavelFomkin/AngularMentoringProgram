@@ -7,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActionsComponent implements OnInit {
 
-  constructor() { }
-
   ngOnInit() {
   }
 
