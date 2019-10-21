@@ -1,0 +1,17 @@
+#new-course {
+  position: relative;
+  padding-bottom: 64px;
+}
+
+#new-course-form {
+  /*position: absolute;*/
+  /*top: 50%;*/
+  /*left: 50%;*/
+  /*transform: translate(-50%, -50%);*/
+  margin: 10px 85px;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  background-color: #ffffff;
+  min-width: 470px;
+}

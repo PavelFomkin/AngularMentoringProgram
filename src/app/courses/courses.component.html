@@ -1,5 +1,5 @@
-<app-breadcrumb></app-breadcrumb>
-<app-actions></app-actions>
+<app-breadcrumb [links]=breadcrumbLinks></app-breadcrumb>
 <div id="courses">
+  <app-actions></app-actions>
   <app-course *ngFor="let course of courses" [course]="course"></app-course>
 </div>
