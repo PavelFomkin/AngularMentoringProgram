@@ -1,0 +1,24 @@
+<div id="registration-form-container">
+  <div id="registration-form">
+    <div>
+      <h3 class="auth-form-name">Registration</h3>
+      <h5 class="error-message" *ngIf="error !== null">{{error}}</h5>
+    </div>
+    <form name="registrationForm" (ngSubmit)="register()" #registrationForm="ngForm">
+      <div class="field">
+        <label for="login">Login:</label>  <label class="required-label">*required</label>
+        <input class="form-control" id="login" type="text" name="login" placeholder="Enter e-mail" [(ngModel)]="username" required>
+      </div>
+      <div class="field">
+        <label for="password1">Password:</label>  <label class="required-label">*required</label>
+        <input class="form-control" id="password1" type="password" name="password" placeholder="Enter password" [(ngModel)]="password" required>
+      </div>
+      <div class="field">
+        <label for="password2">Password (repeat):</label>  <label class="required-label">*required</label>
+        <input class="form-control" id="password2" type="password" name="repeatedPassword" placeholder="Repeat the password" [(ngModel)]="repeatedPassword" required>
+      </div>
+      <button type="button" class="btn btn-sm btn-success" (click)="goBack()">Back</button>
+      <button id="register" type="submit" class="btn btn-sm btn-success" [disabled]="registrationForm.form.invalid">Register</button>
+    </form>
+  </div>
+</div>

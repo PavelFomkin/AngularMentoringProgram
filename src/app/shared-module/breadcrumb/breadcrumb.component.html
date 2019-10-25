@@ -1,0 +1,15 @@
+<div id="breadcrumb-container">
+  <ul>
+    <li class="breadcrumb-element" *ngFor="let link of links">
+      <div *ngIf="links.indexOf(link) < links.length - 1; else currentLink" class="breadcrumb-link">
+        <a routerLink="{{link.url}}">{{link.title}}</a>
+        <span class="delimiter">&nbsp;/&nbsp;</span>
+      </div>
+      <ng-template #currentLink>
+        <div id="breadcrumb-current-link">
+          <a routerLink="{{link.url}}">{{link.title}}</a>
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+</div>

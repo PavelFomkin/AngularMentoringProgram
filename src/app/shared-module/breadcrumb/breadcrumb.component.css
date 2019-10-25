@@ -1,0 +1,26 @@
+#breadcrumb-container {
+  height: 64px;
+  position: relative;
+  background-color: white;
+}
+
+#breadcrumb-container ul {
+  padding-left: 85px;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  transform: translate( 0, -50%);
+}
+
+.breadcrumb-element {
+  display: inline-block;
+  font-size: large;
+}
+
+.breadcrumb-link a {
+  color: grey;
+}
+
+#breadcrumb-current-link a {
+  color: black;
+}
