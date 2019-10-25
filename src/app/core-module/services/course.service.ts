@@ -81,8 +81,9 @@ export class CourseService {
     ];
   }
 
-  getCourcesByName(courseName: string): Course[] {
-        return this.getCourses().filter(course => course.title.match(courseName));
+  getCoursesByName(courseName: string): Course[] {
+      console.log(courseName);
+      return this.getCourses().filter(course => course.title.toLowerCase().includes(courseName.toLowerCase()));
   }
 
 

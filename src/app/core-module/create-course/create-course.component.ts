@@ -19,6 +19,6 @@ export class CreateCourseComponent implements OnInit {
   }
 
   createCourse() {
-
+    alert('not yet');
   }
 }

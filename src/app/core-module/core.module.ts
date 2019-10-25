@@ -8,10 +8,9 @@ import {CourseComponent} from './course/course.component';
 import {ActionsComponent} from './actions/actions.component';
 import {FormsModule} from '@angular/forms';
 import {SearchComponent} from './search/search.component';
-import { CoursesContainerComponent } from './courses-container/courses-container.component';
 
 const routes = [
-  {path: 'courses', component: CoursesContainerComponent},
+  {path: 'courses', component: CoursesComponent},
   {path: 'create-course', component: CreateCourseComponent},
 ];
 
@@ -22,7 +21,6 @@ const routes = [
     CreateCourseComponent,
     ActionsComponent,
     SearchComponent,
-    CoursesContainerComponent,
   ],
   imports: [
     CommonModule,
