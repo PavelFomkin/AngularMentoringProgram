@@ -14,6 +14,7 @@ export class CoursesComponent implements OnInit, OnChanges {
   breadcrumbLinks: BreadcrumbLink[] = [
       {title: 'Courses', url: '/courses'}
     ];
+  noCursesTitle: string = 'Courses not found';
 
   constructor(private courseService: CourseService) {
     console.log('created a new courses component');

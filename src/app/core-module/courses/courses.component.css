@@ -2,3 +2,8 @@
   padding-bottom: 64px;
   display: grid;
 }
+
+#courses-not-found {
+  text-align: center;
+  margin: 10px 0;
+}
