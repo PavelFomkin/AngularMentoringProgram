@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Course} from '../../entities/course';
 import {BreadcrumbLink} from '../../entities/breadcrumb-link';
 import {CourseService} from '../services/course.service';
@@ -16,21 +16,22 @@ export class CoursesComponent implements OnInit, OnChanges {
     ];
 
   constructor(private courseService: CourseService) {
+    console.log('created a new courses component');
   }
 
   ngOnInit(): void {
-    console.log('ngOnInit courses');
+    console.log('ngOnInit courses component');
     this.courses = this.courseService.getCourses();
   }
 
-  ngOnChanges(): void {
-    console.log('ngOnChanges courses');
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('ngOnChanges courses component');
+    console.log(changes);
   }
 
   removeCourse(id: number) {
     this.courses = this.courses.filter(course => id !== course.id);
   }
-
   searchCourses(searchData: string) {
     this.courses = this.courseService.getCoursesByName(searchData);
   }

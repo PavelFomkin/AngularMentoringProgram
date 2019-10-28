@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {BreadcrumbLink} from '../../entities/breadcrumb-link';
 import {Course} from '../../entities/course';
 
@@ -7,7 +7,7 @@ import {Course} from '../../entities/course';
   templateUrl: './create-course.component.html',
   styleUrls: ['./create-course.component.css']
 })
-export class CreateCourseComponent implements OnInit {
+export class CreateCourseComponent implements OnInit, OnChanges {
 
   breadcrumbLinks: BreadcrumbLink[] = [
     {title: 'Courses', url: '/courses'},
@@ -15,7 +15,17 @@ export class CreateCourseComponent implements OnInit {
   ];
   newCourse: Course;
 
+  constructor() {
+    console.log('create a new create-course component');
+  }
+
   ngOnInit() {
+    console.log('ngOnInit create-course component');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('ngOnChanges create-course component');
+    console.log(changes);
   }
 
   createCourse() {

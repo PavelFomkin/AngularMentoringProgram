@@ -6,7 +6,7 @@ import {Course} from '../../entities/course';
 })
 export class CourseService {
 
-  getCourses(): Course[] {
+  public getCourses(): Course[] {
     return [
       {
         id: 1,
@@ -81,7 +81,7 @@ export class CourseService {
     ];
   }
 
-  getCoursesByName(courseName: string): Course[] {
+  public getCoursesByName(courseName: string): Course[] {
       console.log(courseName);
       return this.getCourses().filter(course => course.title.toLowerCase().includes(courseName.toLowerCase()));
   }
