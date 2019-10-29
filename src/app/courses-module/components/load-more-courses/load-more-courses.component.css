@@ -8,6 +8,15 @@
   text-align: center;
 }
 
+#load-more-frame:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+#load-more-frame span:hover {
+  cursor: pointer;
+}
+
 .disabled {
   display: none;
 }
