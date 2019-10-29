@@ -11,13 +11,3 @@
 .disabled {
   display: none;
 }
-
-
-.test {
-  display: flex;
-}
-.test a {
-  vertical-align: center;
-  justify-content: center;
-/* left right*/
-}

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../auth-module/services/auth.service';
+import {AuthService, currentUser} from '../../../auth-module/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -20,5 +20,9 @@ export class HeaderComponent implements OnInit {
 
   signOut() {
     this.authService.logout();
+  }
+
+  getCurrentUser(): string {
+    return localStorage.getItem(currentUser);
   }
 }

@@ -3,8 +3,8 @@
     <img src="/assets/images/logo.png" alt="Logo">
   </a>
   <nav class="header-nav" *ngIf="isLoggedIn(); else noAuth">
-    <a routerLink="create-course">
-      <span>Create a course</span>
+    <a>
+      <img class="smallIcon" src="/assets/images/user.png" alt=""/><span>{{getCurrentUser()}}</span>
     </a>
     <a (click)="signOut()" routerLink="login">
       <img class="smallIcon" src="/assets/images/logout.png" alt=""/><span>Log Out</span>

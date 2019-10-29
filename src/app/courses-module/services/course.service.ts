@@ -113,7 +113,6 @@ export class CourseService {
   }
 
   getNumberOfCourses(courseName?: string): number {
-    console.log('test');
     if (courseName) {
       return this.data.filter(course => course.title.toLowerCase().includes(courseName.toLowerCase())).length;
     } else {
