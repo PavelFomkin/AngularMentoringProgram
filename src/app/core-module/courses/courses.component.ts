@@ -10,11 +10,13 @@ import {CourseService} from '../services/course.service';
 })
 export class CoursesComponent implements OnInit, OnChanges {
 
-  courses: Course[];
+  noCoursesTitle: string = 'Courses not found';
+  searchData: string;
+  availableNumberOfCourses: number;
+  loadedCourses: Course[];
   breadcrumbLinks: BreadcrumbLink[] = [
       {title: 'Courses', url: '/courses'}
     ];
-  noCursesTitle: string = 'Courses not found';
 
   constructor(private courseService: CourseService) {
     console.log('created a new courses component');
@@ -22,7 +24,8 @@ export class CoursesComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     console.log('ngOnInit courses component');
-    this.courses = this.courseService.getCourses();
+    this.availableNumberOfCourses = this.courseService.getNumberOfCourses();
+    this.loadedCourses = this.availableNumberOfCourses > 0 ? this.courseService.getCourses(0) : [];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -31,9 +34,33 @@ export class CoursesComponent implements OnInit, OnChanges {
   }
 
   removeCourse(id: number) {
-    this.courses = this.courses.filter(course => id !== course.id);
+    this.courseService.removeCourse(id);
+    this.loadedCourses = this.loadedCourses.filter(course => id !== course.id);
+    this.availableNumberOfCourses = this.searchData ?
+      this.courseService.getNumberOfCourses(this.searchData) :
+      this.courseService.getNumberOfCourses();
   }
-  searchCourses(searchData: string) {
-    this.courses = this.courseService.getCoursesByName(searchData);
+
+  searchCourses(searchData?: string) {
+    if (searchData) {
+      this.searchData = searchData.trim();
+      this.availableNumberOfCourses = this.courseService.getNumberOfCourses(this.searchData);
+      this.loadedCourses = this.availableNumberOfCourses > 0 ?
+        this.courseService.getCourses(0, this.searchData) : [];
+    } else {
+      this.searchData = undefined;
+      this.availableNumberOfCourses = this.courseService.getNumberOfCourses();
+      this.loadedCourses = this.availableNumberOfCourses > 0 ?
+        this.courseService.getCourses(0) : [];
+    }
+  }
+
+  loadMore() {
+    console.log('load more -----------------------------------------')
+    if (this.searchData) {
+      this.loadedCourses = [...this.loadedCourses, ...this.courseService.getCourses(this.loadedCourses.length, this.searchData)];
+    } else {
+      this.loadedCourses = [...this.loadedCourses, ...this.courseService.getCourses(this.loadedCourses.length)];
+    }
   }
 }
