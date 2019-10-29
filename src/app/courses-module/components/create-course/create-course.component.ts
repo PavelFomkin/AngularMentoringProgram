@@ -1,6 +1,6 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {BreadcrumbLink} from '../../entities/breadcrumb-link';
-import {Course} from '../../entities/course';
+import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
+import {Course} from '../../models/course';
 
 @Component({
   selector: 'app-create-course',

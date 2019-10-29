@@ -1,7 +1,7 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Course} from '../../entities/course';
-import {BreadcrumbLink} from '../../entities/breadcrumb-link';
-import {CourseService} from '../services/course.service';
+import {Course} from '../../models/course';
+import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
+import {CourseService} from '../../services/course.service';
 
 @Component({
   selector: 'app-courses',
@@ -39,6 +39,8 @@ export class CoursesComponent implements OnInit, OnChanges {
     this.availableNumberOfCourses = this.searchData ?
       this.courseService.getNumberOfCourses(this.searchData) :
       this.courseService.getNumberOfCourses();
+
+    // console.log('available number of data: ' + this.availableNumberOfCourses);
   }
 
   searchCourses(searchData?: string) {
@@ -56,7 +58,6 @@ export class CoursesComponent implements OnInit, OnChanges {
   }
 
   loadMore() {
-    console.log('load more -----------------------------------------')
     if (this.searchData) {
       this.loadedCourses = [...this.loadedCourses, ...this.courseService.getCourses(this.loadedCourses.length, this.searchData)];
     } else {

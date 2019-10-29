@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Alert, AuthService} from '../services/auth.service';
+import {Alert, AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-registration',

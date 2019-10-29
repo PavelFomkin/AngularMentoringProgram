@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Course} from '../../entities/course';
+import {Course} from '../../models/course';
 
 @Component({
   selector: 'app-course',
