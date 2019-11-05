@@ -3,16 +3,16 @@
     <img src="/assets/images/logo.png" alt="Logo">
   </a>
   <nav class="header-nav" *ngIf="isLoggedIn(); else noAuth">
-    <a>
+    <a id="userNameEl">
       <img class="smallIcon" src="/assets/images/user.png" alt=""/><span>{{getCurrentUser()}}</span>
     </a>
-    <a (click)="signOut()" routerLink="login">
+    <a id="signOutEl" (click)="signOut()" routerLink="login">
       <img class="smallIcon" src="/assets/images/logout.png" alt=""/><span>Log Out</span>
     </a>
   </nav>
   <ng-template #noAuth>
     <nav class="header-nav">
-      <a routerLink="login"><img class="smallIcon" src="/assets/images/login.png" alt=""/><span>Log In</span>
+      <a id="loginEl" routerLink="login"><img class="smallIcon" src="/assets/images/login.png" alt=""/><span>Log In</span>
       </a>
     </nav>
   </ng-template>

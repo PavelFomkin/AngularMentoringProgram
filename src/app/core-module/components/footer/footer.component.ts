@@ -5,12 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
-export class FooterComponent implements OnInit {
-  private footerText: string = 'Copyright © Videocourses. All rights reserved';
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class FooterComponent {
+  footerText: string = 'Copyright © Videocourses. All rights reserved';
 
 }
