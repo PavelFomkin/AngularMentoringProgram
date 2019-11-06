@@ -13,8 +13,7 @@ describe('BreadcrumbComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [BreadcrumbComponent, BreadcrumbWrapperComponent],
-      imports: [RouterTestingModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      imports: [RouterTestingModule]
     })
       .compileComponents();
   }));
@@ -29,7 +28,7 @@ describe('BreadcrumbComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('input works and active link is the last one', () => {
+  it('input works and the current link is the last one', () => {
     const currentLink: HTMLElement = fixture.debugElement.query(By.css('#breadcrumb-current-link a')).nativeElement;
     const otherLinks = fixture.debugElement.queryAll(By.css('.breadcrumb-link a'));
 
