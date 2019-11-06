@@ -1,14 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateCourseComponent } from './create-course.component';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 
-xdescribe('CreateCourseComponent', () => {
+describe('CreateCourseComponent', () => {
   let component: CreateCourseComponent;
   let fixture: ComponentFixture<CreateCourseComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateCourseComponent ]
+      declarations: [ CreateCourseComponent ],
+      imports: [FormsModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
