@@ -48,8 +48,5 @@ describe('SearchComponent', () => {
   template: `<app-search (search)="testOutput($event)"></app-search>`,
 })
 export class SearchWrapperComponent {
-  output: string;
-  testOutput(searchData: string): void {
-    this.output = searchData;
-  }
+  testOutput(searchData: string): void { }
 }
