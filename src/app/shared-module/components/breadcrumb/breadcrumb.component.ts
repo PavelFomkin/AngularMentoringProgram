@@ -6,13 +6,7 @@ import {BreadcrumbLink} from '../../models/breadcrumb-link';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.css']
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent {
 
   @Input() links: BreadcrumbLink[];
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }
