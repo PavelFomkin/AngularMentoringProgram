@@ -1,0 +1,15 @@
+#footer {
+  height: 64px;
+  background-color: #414452;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+#footerText {
+  float: right;
+  color: lightgrey;
+  font: menu;
+  margin-right: 85px;
+  margin-top: 20px;
+}

@@ -1,0 +1,17 @@
+<div id="course-frame">
+  <div id="course-information">
+    <div id="top-row">
+      <h4>{{course?.title}}</h4>
+      <div id="top-row-time-block">
+        <span>Date/time: {{ course?.creationDate | date:'short'}}</span>
+        <span>Duration: {{ course?.duration }} min</span>
+      </div>
+    </div>
+    <p>{{course?.description}}</p>
+  </div>
+  <div id="buttons">
+    <button id="editButton" class="btn btn-sm btn-primary" onclick="alert('not yet')">Edit</button>
+    <button id="removeButton" class="btn btn-sm btn-primary" (click)="removeCourse()">Delete</button>
+  </div>
+</div>
+
