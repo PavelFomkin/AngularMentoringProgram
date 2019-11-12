@@ -39,8 +39,6 @@ export class CoursesComponent implements OnInit, OnChanges {
     this.availableNumberOfCourses = this.searchData ?
       this.courseService.getNumberOfCourses(this.searchData) :
       this.courseService.getNumberOfCourses();
-
-    // console.log('available number of data: ' + this.availableNumberOfCourses);
   }
 
   searchCourses(searchData?: string) {

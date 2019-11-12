@@ -9,6 +9,7 @@ import {ActionsComponent} from './components/actions/actions.component';
 import {FormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {LoadMoreCoursesComponent} from './components/load-more-courses/load-more-courses.component';
+import {BorderColorByDateDirective} from './directives/border-color-by-date.directive';
 
 const routes = [
   {path: 'courses', component: CoursesComponent},
@@ -23,6 +24,7 @@ const routes = [
     ActionsComponent,
     SearchComponent,
     LoadMoreCoursesComponent,
+    BorderColorByDateDirective,
   ],
   imports: [
     CommonModule,
