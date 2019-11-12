@@ -1,15 +1,18 @@
-<div [appBorderColorByDate]="course.creationDate" id="course-frame">
-  <div id="course-information">
-    <div id="top-row">
-      <h4>{{course?.title}}</h4>
-      <div id="top-row-time-block">
-        <span>Date/time: {{ course?.creationDate | date:'short'}}</span>
-        <span>Duration: {{ course?.duration }} min</span>
+<div id="course-frame" [appBorderColorByDate]="course.creationDate"
+     [ngClass]="course.topRated ? 'top-rated-item-color' : 'usual-item-color'">
+  <div class="course-information">
+    <div class="top-row">
+      <div class="title">
+        <h4 *appTopRated="course.topRated">{{course.title | uppercase}}</h4>
+      </div>
+      <div class="top-row-time-block">
+        <span>Date/time:<br>{{ course.creationDate | date:'d MMM y'}}</span>
+        <span>Duration:<br>{{ course.duration | duration }}</span>
       </div>
     </div>
-    <p>{{course?.description}}</p>
+    <p>{{course.description}}</p>
   </div>
-  <div id="buttons">
+  <div class="buttons">
     <button id="editButton" class="btn btn-sm btn-primary" onclick="alert('not yet')">Edit</button>
     <button id="removeButton" class="btn btn-sm btn-primary" (click)="removeCourse()">Delete</button>
   </div>

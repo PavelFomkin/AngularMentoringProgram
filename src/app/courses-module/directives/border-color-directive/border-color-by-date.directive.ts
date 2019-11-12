@@ -14,9 +14,9 @@ export class BorderColorByDateDirective implements OnChanges {
 
   ngOnChanges(): void {
     if (this.isCreationDateFresh()) {
-      this.el.nativeElement.style.border = '1px solid green';
+      this.el.nativeElement.style.border = '2px solid green';
     } else if (this.isCreationDateWillBeReleased()) {
-      this.el.nativeElement.style.border = '1px solid blue';
+      this.el.nativeElement.style.border = '2px solid blue';
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, 'border');
     }

@@ -2,8 +2,11 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CourseComponent} from './course.component';
 import {By} from '@angular/platform-browser';
-import {Component} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {Course} from '../../models/course';
+import {BorderColorByDateDirective} from '../../directives/border-color-directive/border-color-by-date.directive';
+import {TopRatedDirective} from '../../directives/top-rated-directive/top-rated.directive';
+import {DurationPipe} from '../../pipes/duration-pipe/duration-pipe.pipe';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -11,7 +14,7 @@ describe('CourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CourseComponent, CourseWrapperComponent]
+      declarations: [CourseComponent, CourseWrapperComponent, BorderColorByDateDirective, TopRatedDirective, DurationPipe],
     })
       .compileComponents();
   }));
@@ -51,10 +54,11 @@ describe('CourseComponent', () => {
 export class CourseWrapperComponent {
   course: Course = {
     id: 1,
-    title: 'Angular course',
+    title: 'ANGULAR COURSE',
     description: 'description',
     duration: 30,
-    creationDate: new Date()
+    creationDate: new Date(),
+    topRated: true
   };
   testOutput(courseId: number): void {}
 }

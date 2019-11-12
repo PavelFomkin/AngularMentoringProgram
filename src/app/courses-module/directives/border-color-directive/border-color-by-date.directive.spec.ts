@@ -50,8 +50,7 @@ describe('BorderColorByDateDirective', () => {
 });
 
 @Component({
-  template: `
-    <div [appBorderColorByDate]="date"></div>`
+  template: `<div [appBorderColorByDate]="date"></div>`
 })
 class TestComponent {
   date: Date = new Date();

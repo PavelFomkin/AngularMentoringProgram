@@ -3,46 +3,57 @@
   padding: 10px;
   border-radius: 6px;
   box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
-  background-color: #ffffff;
   min-width: 470px;
 }
 
-#course-information {
+.course-information {
   display: inline-block;
   width: calc(100% - 150px);
   padding: 10px;
 }
 
-#buttons {
+.buttons {
   display: inline-block;
   width: 150px;
   padding: 10px;
 }
 
-#buttons button {
+.title {
+  display: inline-flex;
+}
+
+.buttons button {
   margin: 5px;
 }
 
-#top-row {
+.top-row {
   display: inline-flex;
   width: 100%;
 }
 
-#top-row h4 {
+.top-row div {
   width: calc(100% - 200px);
 }
 
-#top-row-time-block {
+.top-row-time-block {
   display: inline-flex;
   float: right;
-  width: 200px;
+  max-width: 200px;
   font-size: smaller;
 }
 
-#top-row-time-block span {
-  margin: 5px;
+.top-row-time-block span {
+  margin: 5px 10px;
+}
+
+.top-rated-item-color {
+  background-color: lightgoldenrodyellow;
+}
+
+.usual-item-color {
+  background-color: #ffffff;
 }
 
 h4 {
-  color: #2c2f3c;
+  color: dimgrey;
 }
