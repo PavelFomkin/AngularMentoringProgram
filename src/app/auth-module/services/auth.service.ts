@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.getCurrentUser() !== null;
+    return this.getUserInfo() !== null;
   }
 
   logout(): void {
@@ -59,7 +59,7 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
-  getCurrentUser() {
+  getUserInfo() {
     return localStorage.getItem(currentUser);
   }
 }
