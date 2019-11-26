@@ -34,13 +34,13 @@ export class CoursesComponent implements OnInit, OnChanges {
   }
 
   removeCourse(id: number) {
-    this.courseService.removeCourse(id);
-    this.loadedCourses = this.loadedCourses.filter(course => id !== course.id);
-    this.availableNumberOfCourses = this.searchData ?
-      this.courseService.getNumberOfCourses(this.searchData) :
-      this.courseService.getNumberOfCourses();
-
-    // console.log('available number of data: ' + this.availableNumberOfCourses);
+    if (confirm('Do you really want to delete this course?')) {
+      this.courseService.removeCourse(id);
+      this.loadedCourses = this.loadedCourses.filter(course => id !== course.id);
+      this.availableNumberOfCourses = this.searchData ?
+        this.courseService.getNumberOfCourses(this.searchData) :
+        this.courseService.getNumberOfCourses();
+    }
   }
 
   searchCourses(searchData?: string) {

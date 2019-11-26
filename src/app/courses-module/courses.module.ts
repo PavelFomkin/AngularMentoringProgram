@@ -9,6 +9,10 @@ import {ActionsComponent} from './components/actions/actions.component';
 import {FormsModule} from '@angular/forms';
 import {SearchComponent} from './components/search/search.component';
 import {LoadMoreCoursesComponent} from './components/load-more-courses/load-more-courses.component';
+import {BorderColorByDateDirective} from './directives/border-color-directive/border-color-by-date.directive';
+import {TopRatedDirective} from './directives/top-rated-directive/top-rated.directive';
+import {DurationPipe} from './pipes/duration-pipe/duration-pipe.pipe';
+import {OrderByPipe} from './pipes/order-by/order-by.pipe';
 
 const routes = [
   {path: 'courses', component: CoursesComponent},
@@ -23,6 +27,10 @@ const routes = [
     ActionsComponent,
     SearchComponent,
     LoadMoreCoursesComponent,
+    BorderColorByDateDirective,
+    TopRatedDirective,
+    DurationPipe,
+    OrderByPipe,
   ],
   imports: [
     CommonModule,
