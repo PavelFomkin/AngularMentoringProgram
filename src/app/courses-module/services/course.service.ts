@@ -129,6 +129,9 @@ export class CourseService {
   }
 
   createCourse(course: Course): void {
+    course.creationDate = new Date(course.creationDate);
+    course.id = this.data[this.data.length - 1].id + 1;
+    course.topRated = false;
     this.data = [...this.data, course];
   }
 

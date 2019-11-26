@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CourseComponent} from './course.component';
 import {By} from '@angular/platform-browser';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component} from '@angular/core';
 import {Course} from '../../models/course';
 import {BorderColorByDateDirective} from '../../directives/border-color-directive/border-color-by-date.directive';
 import {TopRatedDirective} from '../../directives/top-rated-directive/top-rated.directive';
