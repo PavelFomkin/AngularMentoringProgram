@@ -24,8 +24,8 @@ export class BorderColorByDateDirective implements OnChanges {
 
   private isCreationDateFresh(): boolean {
     const now = Date.now();
-    return this.creationDate.getTime() < now &&
-      this.creationDate.getTime() >= now - TWO_WEEKS_AS_MILLISECONDS;
+    return this.creationDate.getTime() <= now &&
+      this.creationDate.getTime() > now - TWO_WEEKS_AS_MILLISECONDS;
   }
 
   private isCreationDateWillBeReleased(): boolean {

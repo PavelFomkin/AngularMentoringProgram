@@ -116,9 +116,8 @@ export class CourseService {
     },
   ];
 
-  // constructor(orderBy)
-
-  public getCourses(startIndex: number, courseName?: string): Course[] {
+  // getList()
+  getCourses(startIndex: number, courseName?: string): Course[] {
     if (courseName) {
       return this.data
         .filter(course => course.title.toLowerCase().includes(courseName.toLowerCase()))
@@ -129,15 +128,35 @@ export class CourseService {
     }
   }
 
+  createCourse(course: Course): void {
+    this.data = [...this.data, course];
+  }
+
+  // getItemByUd()
+  getCourseById(id: number): Course {
+    return this.data.find(course => course.id === id);
+  }
+
+  // updateItem()
+  updateCourse(course: Course): void {
+    const courseFromStorage = this.getCourseById(course.id);
+    courseFromStorage.title = course.title;
+    courseFromStorage.creationDate = course.creationDate;
+    courseFromStorage.duration = course.duration;
+    courseFromStorage.description = course.description;
+    courseFromStorage.topRated = course.topRated;
+  }
+
+  // removeItem()
+  removeCourse(id: number) {
+    this.data = this.data.filter(course => id !== course.id);
+  }
+
   getNumberOfCourses(courseName?: string): number {
     if (courseName) {
       return this.data.filter(course => course.title.toLowerCase().includes(courseName.toLowerCase())).length;
     } else {
       return this.data.length;
     }
-  }
-
-  removeCourse(id: number) {
-    this.data = this.data.filter(course => id !== course.id);
   }
 }

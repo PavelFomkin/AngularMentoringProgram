@@ -20,6 +20,6 @@ export class HeaderComponent {
   }
 
   getCurrentUser(): string {
-    return this.authService.getCurrentUser();
+    return this.authService.getUserInfo();
   }
 }
