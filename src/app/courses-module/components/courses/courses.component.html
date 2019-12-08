@@ -2,9 +2,9 @@
 <div id="courses">
   <app-search (search)="searchCourses($event)"></app-search>
   <app-actions></app-actions>
-  <div *ngIf="loadedCourses.length > 0 || availableNumberOfCourses > 0; else noCourses">
-    <app-course *ngFor="let course of loadedCourses | orderBy: 'creationDate'" [course]="course" (remove)="removeCourse($event)"></app-course>
-    <app-load-more-courses [hasMoreCourses]="availableNumberOfCourses > loadedCourses.length"
+  <div *ngIf="loadedCourses?.length > 0 || hasMoreCourses; else noCourses">
+    <app-course *ngFor="let course of loadedCourses | orderBy: 'date'" [course]="course" (remove)="removeCourse($event)"></app-course>
+    <app-load-more-courses [hasMoreCourses]="hasMoreCourses"
                            (loadMoreCourses)="loadMore()"></app-load-more-courses>
   </div>
   <ng-template #noCourses>

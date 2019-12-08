@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
+import {ChangeDetectorRef, Injectable} from '@angular/core';
 import {Course} from '../models/course';
+import {HttpClient} from "@angular/common/http";
 
 const now = new Date();
 
@@ -10,132 +11,143 @@ export class CourseService {
 
   numberOfCoursesToLoad: number = 3;
   data: Course[] = [
-    {
-      id: 1,
-      title: 'Angular course',
-      description: 'description',
-      duration: 90,
-      creationDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 25, now.getHours()),
-      topRated: true
-    },
-    {
-      id: 2,
-      title: 'JS course',
-      description: 'description',
-      duration: 60,
-      creationDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 25, now.getHours()),
-      topRated: true
-    },
-    {
-      id: 3,
-      title: 'TS course',
-      description: 'description',
-      duration: 70,
-      creationDate: now,
-      topRated: false
-    },
-    {
-      id: 4,
-      title: 'Java course',
-      description: 'description',
-      duration: 30,
-      creationDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 5, now.getHours()),
-      topRated: true
-    },
-    {
-      id: 5,
-      title: 'C++ course',
-      description: 'description',
-      duration: 130,
-      creationDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5, now.getHours()),
-      topRated: true
-    },
-    {
-      id: 6,
-      title: 'C# course',
-      description: 'description',
-      duration: 20,
-      creationDate: now,
-      topRated: false
-    },
-    {
-      id: 7,
-      title: 'HTML course',
-      description: 'description',
-      duration: 115,
-      creationDate: now,
-      topRated: true
-    },
-    {
-      id: 8,
-      title: 'CSS course',
-      description: 'description',
-      duration: 65,
-      creationDate: now,
-      topRated: false
-    },
-    {
-      id: 9,
-      title: 'Python course',
-      description: 'description',
-      duration: 10,
-      creationDate: now,
-      topRated: false
-    },
-    {
-      id: 10,
-      title: 'Groove course',
-      description: 'description',
-      duration: 330,
-      creationDate: now,
-      topRated: false
-    },
-    {
-      id: 11,
-      title: 'AngularJS',
-      description: 'description',
-      duration: 20,
-      creationDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 20, now.getHours()),
-      topRated: false
-    },
-    {
-      id: 12,
-      title: 'JS core',
-      description: 'description',
-      duration: 370,
-      creationDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 20, now.getHours()),
-      topRated: false
-    },
-    {
-      id: 13,
-      title: 'JS Advance',
-      description: 'description',
-      duration: 100,
-      creationDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 20, now.getHours()),
-      topRated: false
-    },
+    // {
+    //   id: 1,
+    //   name: 'Angular course',
+    //   description: 'description',
+    //   length: 90,
+    //   date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 25, now.getHours()),
+    //   isTopRated: true
+    // },
+    // {
+    //   id: 2,
+    //   name: 'JS course',
+    //   description: 'description',
+    //   length: 60,
+    //   date: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 25, now.getHours()),
+    //   isTopRated: true
+    // },
+    // {
+    //   id: 3,
+    //   name: 'TS course',
+    //   description: 'description',
+    //   length: 70,
+    //   date: now,
+    //   isTopRated: false
+    // },
+    // {
+    //   id: 4,
+    //   name: 'Java course',
+    //   description: 'description',
+    //   length: 30,
+    //   date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 5, now.getHours()),
+    //   isTopRated: true
+    // },
+    // {
+    //   id: 5,
+    //   name: 'C++ course',
+    //   description: 'description',
+    //   length: 130,
+    //   date: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5, now.getHours()),
+    //   isTopRated: true
+    // },
+    // {
+    //   id: 6,
+    //   name: 'C# course',
+    //   description: 'description',
+    //   length: 20,
+    //   date: now,
+    //   isTopRated: false
+    // },
+    // {
+    //   id: 7,
+    //   name: 'HTML course',
+    //   description: 'description',
+    //   length: 115,
+    //   date: now,
+    //   isTopRated: true
+    // },
+    // {
+    //   id: 8,
+    //   name: 'CSS course',
+    //   description: 'description',
+    //   length: 65,
+    //   date: now,
+    //   isTopRated: false
+    // },
+    // {
+    //   id: 9,
+    //   name: 'Python course',
+    //   description: 'description',
+    //   length: 10,
+    //   date: now,
+    //   isTopRated: false
+    // },
+    // {
+    //   id: 10,
+    //   name: 'Groove course',
+    //   description: 'description',
+    //   length: 330,
+    //   date: now,
+    //   isTopRated: false
+    // },
+    // {
+    //   id: 11,
+    //   name: 'AngularJS',
+    //   description: 'description',
+    //   length: 20,
+    //   date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 20, now.getHours()),
+    //   isTopRated: false
+    // },
+    // {
+    //   id: 12,
+    //   name: 'JS core',
+    //   description: 'description',
+    //   length: 370,
+    //   date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 20, now.getHours()),
+    //   isTopRated: false
+    // },
+    // {
+    //   id: 13,
+    //   name: 'JS Advance',
+    //   description: 'description',
+    //   length: 100,
+    //   date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 20, now.getHours()),
+    //   isTopRated: false
+    // },
   ];
+
+  constructor (private httpClient: HttpClient) {}
 
   // getList()
   getCourses(startIndex: number, courseName?: string): Course[] {
-    if (courseName) {
-      return this.data
-        .filter(course => course.title.toLowerCase().includes(courseName.toLowerCase()))
-        .slice(startIndex, startIndex + this.numberOfCoursesToLoad);
-    } else {
-      return this.data
-        .slice(startIndex, startIndex + this.numberOfCoursesToLoad);
-    }
+    this.httpClient.get<Course[]>('http://localhost:3004/courses/')
+      .subscribe((items: Course[]) => {
+        this.data = items;
+        // this.cdRef.markForCheck();
+        console.log("items: " + items);
+        console.log(items.length);
+      });
+    return this.data;
+
+    // if (courseName) {
+    //   return this.data
+    //     .filter(course => course.name.toLowerCase().includes(courseName.toLowerCase()))
+    //     .slice(startIndex, startIndex + this.numberOfCoursesToLoad);
+    // } else {
+    //   return this.data
+    //     .slice(startIndex, startIndex + this.numberOfCoursesToLoad);
+    // }
   }
 
   createCourse(course: Course): void {
-    course.creationDate = new Date(course.creationDate);
-    course.id = this.data[this.data.length - 1].id + 1;
-    course.topRated = false;
-    this.data = [...this.data, course];
+    // course.date = new Date(course.date);
+    // course.id = this.data[this.data.length - 1].id + 1;
+    // course.isTopRated = false;
+    // this.data = [...this.data, course];
   }
 
-  // getItemByUd()
+  // getItemById()
   getCourseById(id: number): Course {
     return this.data.find(course => course.id === id);
   }
@@ -143,11 +155,11 @@ export class CourseService {
   // updateItem()
   updateCourse(course: Course): void {
     const courseFromStorage = this.getCourseById(course.id);
-    courseFromStorage.title = course.title;
-    courseFromStorage.creationDate = course.creationDate;
-    courseFromStorage.duration = course.duration;
+    courseFromStorage.name = course.name;
+    courseFromStorage.date = course.date;
+    courseFromStorage.length = course.length;
     courseFromStorage.description = course.description;
-    courseFromStorage.topRated = course.topRated;
+    courseFromStorage.isTopRated = course.isTopRated;
   }
 
   // removeItem()
@@ -157,7 +169,7 @@ export class CourseService {
 
   getNumberOfCourses(courseName?: string): number {
     if (courseName) {
-      return this.data.filter(course => course.title.toLowerCase().includes(courseName.toLowerCase())).length;
+      return this.data.filter(course => course.name.toLowerCase().includes(courseName.toLowerCase())).length;
     } else {
       return this.data.length;
     }

@@ -13,10 +13,12 @@ import {BorderColorByDateDirective} from './directives/border-color-directive/bo
 import {TopRatedDirective} from './directives/top-rated-directive/top-rated.directive';
 import {DurationPipe} from './pipes/duration-pipe/duration-pipe.pipe';
 import {OrderByPipe} from './pipes/order-by/order-by.pipe';
+import {EditCourseComponent} from "./components/edit-course/edit-course.component";
 
 const routes = [
   {path: 'courses', component: CoursesComponent},
-  {path: 'create-course', component: CreateCourseComponent},
+  {path: 'courses/new', component: CreateCourseComponent},
+  {path: 'courses/:id', component: EditCourseComponent},
 ];
 
 @NgModule({
@@ -24,6 +26,7 @@ const routes = [
     CourseComponent,
     CoursesComponent,
     CreateCourseComponent,
+    EditCourseComponent,
     ActionsComponent,
     SearchComponent,
     LoadMoreCoursesComponent,
@@ -41,6 +44,7 @@ const routes = [
   exports: [
     CoursesComponent,
     CreateCourseComponent,
+    EditCourseComponent,
   ]
 })
 export class CoursesModule {

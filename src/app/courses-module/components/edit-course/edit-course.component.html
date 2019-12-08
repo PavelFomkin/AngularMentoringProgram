@@ -1,0 +1,24 @@
+<app-breadcrumb [links]="breadcrumbLinks"></app-breadcrumb>
+<div id="new-course">
+  <div id="new-course-form">
+    <form name="newCourse" (ngSubmit)="updateCourse(course)" #course="ngForm">
+      <label for="title">Title: </label>
+      <input class="form-control" id="title" name="title" type="text" ngModel required> <br>
+
+      <label for="description">Description: </label>
+      <textarea class="form-control" id="description" name="description" type="text" ngModel required></textarea> <br>
+
+      <label for="date">Date: </label>
+      <input class="form-control" id="date" name="creationDate" type="date" ngModel required> <br>
+
+      <label for="duration">Duration: </label>
+      <input class="form-control" id="duration" name="duration" type="number" ngModel required>
+      <label id="duration-view">{{course?.duration | duration}} </label> <br> <br>
+
+      <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="course.form.invalid">
+        Save
+      </button>
+      <button id="cancel-button" class="btn btn-sm btn-success" type="button" (click)="goBack()">Cancel</button>
+    </form>
+  </div>
+</div>

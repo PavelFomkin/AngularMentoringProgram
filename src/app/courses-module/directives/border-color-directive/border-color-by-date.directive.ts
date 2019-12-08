@@ -7,7 +7,7 @@ const TWO_WEEKS_AS_MILLISECONDS: number = 14 * 24 * 60 * 60 * 1000; // days * ho
 })
 export class BorderColorByDateDirective implements OnChanges {
 
-  @Input('appBorderColorByDate') creationDate: Date;
+  @Input('appBorderColorByDate') date: Date;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
   }
@@ -23,12 +23,12 @@ export class BorderColorByDateDirective implements OnChanges {
   }
 
   private isCreationDateFresh(): boolean {
-    const now = Date.now();
-    return this.creationDate.getTime() <= now &&
-      this.creationDate.getTime() > now - TWO_WEEKS_AS_MILLISECONDS;
+    const now = new Date();
+    return this.date <= now &&
+      this.date > new Date(now.getTime() - TWO_WEEKS_AS_MILLISECONDS);
   }
 
   private isCreationDateWillBeReleased(): boolean {
-    return this.creationDate.getTime() > Date.now();
+    return this.date > new Date();
   }
 }

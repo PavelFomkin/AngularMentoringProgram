@@ -7,9 +7,11 @@ import {CoursesModule} from './courses-module/courses.module';
 import {AuthModule} from './auth-module/auth.module';
 import {SharedModule} from './shared-module/shared.module';
 import {CoreModule} from './core-module/core.module';
+import {NotFoundComponent} from "./core-module/components/not-found/not-found.component";
 
 const routes = [
   {path: '', redirectTo: 'courses', pathMatch: 'full'},
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
@@ -22,7 +24,7 @@ const routes = [
     CoursesModule,
     AuthModule,
     SharedModule,
-    CoreModule
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

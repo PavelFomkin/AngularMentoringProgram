@@ -16,7 +16,7 @@ export class CreateCourseComponent {
 
   breadcrumbLinks: BreadcrumbLink[] = [
     {title: 'Courses', url: '/courses'},
-    {title: 'New Course', url: '/create-course'},
+    {title: 'New Course', url: '/courses/new'},
   ];
 
   createCourse(newCourse: NgForm) {
