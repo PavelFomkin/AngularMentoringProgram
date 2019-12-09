@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from '../../models/course';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
-import {CourseService} from '../../services/course.service';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-courses',
@@ -20,11 +19,11 @@ export class CoursesComponent implements OnInit {
     {title: 'Courses', url: '/courses'}
   ];
 
-  constructor(private courseService: CourseService, private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<Course[]>('http://localhost:3004/courses/?start=0&count=' + this.numberOfCoursesToLoad)
+    this.httpClient.get<Course[]>('http://localhost:3004/courses?start=0&count=' + this.numberOfCoursesToLoad)
       .subscribe((items: Course[]) => {
         this.loadedCourses = items;
         this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
@@ -33,7 +32,7 @@ export class CoursesComponent implements OnInit {
 
   removeCourse(id: number) {
     if (confirm('Do you really want to delete this course?')) {
-      this.httpClient.delete<void>('http://localhost:3004/courses/' + id)
+      this.httpClient.delete<void>('http://localhost:3004/courses' + id)
         .subscribe(() => {
           this.loadedCourses = this.loadedCourses.filter(item => item.id !== id);
         });
@@ -41,17 +40,15 @@ export class CoursesComponent implements OnInit {
   }
 
   searchCourses(searchData?: string) {
-    // if (searchData) {
-    //   this.searchData = searchData.trim();
-    //   this.numberOfCoursesOnPage = this.courseService.getNumberOfCourses(this.searchData);
-    //   this.loadedCourses = this.numberOfCoursesOnPage > 0 ?
-    //     this.courseService.getCourses(0, this.searchData) : [];
-    // } else {
-    //   this.searchData = undefined;
-    //   this.numberOfCoursesOnPage = this.courseService.getNumberOfCourses();
-    //   this.loadedCourses = this.numberOfCoursesOnPage > 0 ?
-    //     this.courseService.getCourses(0) : [];
-    // }
+    this.loadedCourses = [];
+    this.searchData = searchData ? searchData.trim() : '';
+
+    this.httpClient.get<Course[]>('http://localhost:3004/courses?start=0&count=' + this.numberOfCoursesToLoad
+      + '&textFragment=' + this.searchData)
+      .subscribe((items: Course[]) => {
+        this.loadedCourses = items;
+        this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
+      });
   }
 
   loadMore() {
@@ -59,14 +56,14 @@ export class CoursesComponent implements OnInit {
     if (this.searchData) {
       attributes = 'start=' + this.loadedCourses.length
         + '&count=' + this.numberOfCoursesToLoad
-        + 'textFragment=' + this.searchData;
+        + '&textFragment=' + this.searchData;
     } else {
       attributes = 'start=' + this.loadedCourses.length
         + '&count=' + this.numberOfCoursesToLoad;
     }
-    this.httpClient.get<Course[]>('http://localhost:3004/courses/?' + attributes)
+    this.httpClient.get<Course[]>('http://localhost:3004/courses?' + attributes)
       .subscribe((items: Course[]) => {
-        let expectedCountOfCourses = this.loadedCourses.length + this.numberOfCoursesToLoad;
+        const expectedCountOfCourses = this.loadedCourses.length + this.numberOfCoursesToLoad;
         this.loadedCourses = [...this.loadedCourses, ...items];
         this.hasMoreCourses = expectedCountOfCourses <= this.loadedCourses.length;
       });

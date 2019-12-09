@@ -3,17 +3,17 @@
   <div id="new-course-form">
     <form name="newCourse" (ngSubmit)="createCourse(newCourse)" #newCourse="ngForm">
       <label for="title">Title: </label>
-      <input class="form-control" id="title" name="title" type="text" ngModel required> <br>
+      <input class="form-control" id="title" name="name" type="text" ngModel required> <br>
 
       <label for="description">Description: </label>
       <textarea class="form-control" id="description" name="description" type="text" ngModel required></textarea> <br>
 
       <label for="date">Date: </label>
-      <input class="form-control" id="date" name="creationDate" type="date" ngModel required> <br>
+      <input class="form-control" id="date" name="date" type="datetime-local" ngModel required> <br>
 
       <label for="duration">Duration: </label>
-      <input class="form-control" id="duration" name="duration" type="number" ngModel required>
-      <label id="duration-view">{{newCourse?.duration | duration}} </label> <br> <br>
+      <input class="form-control" id="duration" name="length" type="number" ngModel required>
+      <label id="duration-view">{{newCourse?.length | duration}} </label> <br> <br>
 
       <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="newCourse.form.invalid">
         Save

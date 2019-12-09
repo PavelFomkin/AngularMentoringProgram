@@ -1,33 +1,51 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
 import {Course} from '../../models/course';
-import {CourseService} from "../../services/course.service";
-import {NgForm} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-course',
   templateUrl: './edit-course.component.html',
   styleUrls: ['./edit-course.component.css']
 })
-export class EditCourseComponent implements OnInit {
+export class EditCourseComponent implements OnInit, OnDestroy {
 
+  private ID_FIELD: string = 'id';
   private subscription: Subscription;
-  private course2: Course;
-
-  constructor(private courseService: CourseService,
-              private activateRouter: ActivatedRoute,
-              private router: Router) {
-  }
+  private course: Course;
 
   breadcrumbLinks: BreadcrumbLink[] = [
     {title: 'Courses', url: '/courses'},
-    {title: 'test', url: '/courses/:id'},
+    {title: 'course ', url: '/courses/:id'},
   ];
 
-  updateCourse(newCourse: NgForm) {
-    this.courseService.createCourse(newCourse.form.value as Course);
+  constructor(private activateRouter: ActivatedRoute,
+              private httpClient: HttpClient,
+              private router: Router) {
+  }
+
+  ngOnInit(): void {
+    const param: number = this.activateRouter.snapshot.params[this.ID_FIELD];
+
+    this.subscription = this.httpClient.get<Course>('http://localhost:3004/courses/' + param)
+      .subscribe((course: Course) => {
+        this.course = course;
+        this.breadcrumbLinks[1].title += course.id.toString();
+      });
+  }
+
+  updateCourse() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    this.httpClient.patch<Course>('http://localhost:3004/courses/' + this.course.id, this.course, httpOptions)
+      .subscribe((course: Course) => {
+        console.log(course);
+      });
     this.router.navigateByUrl('/courses');
   }
 
@@ -35,22 +53,7 @@ export class EditCourseComponent implements OnInit {
     history.back();
   }
 
-  ngOnInit(): void {
-    const param: number = this.activateRouter.snapshot.params['id'];
-    // console.log("param:" + param);
-    // console.log(this.courseService.getCourseById(2));
-    // console.log(this.courseService.getCourseById(param));
-    // this.course = this.courseService.getCourseById(this.activateRouter.snapshot.params['id']);
-    this.subscription = this.activateRouter.params.subscribe(params => {
-      this.course2 = this.courseService.getCourseById(param);
-      console.log("=======================================================")
-      console.log(param);
-      console.log(this.courseService.getCourseById(3) as Course);
-      console.log(this.course2);
-      console.log("params.id " + params.id);
-      console.log(this.courseService.getCourseById(params.id));
-      console.log(this.courseService.getCourseById(param) as Course);
-      console.log("=======================================================")
-    });
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
