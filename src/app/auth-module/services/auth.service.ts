@@ -1,65 +1,65 @@
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map, tap} from 'rxjs/operators';
 
-export enum Alert {
-  BAD_CREDENTIALS = 'Wrong e-mail or password',
-  PASSWORDS_ARE_DIFFERENT = 'Passwords must be the same',
-  USER_HAS_ALREADY_EXIST = 'The user has already exist',
-}
-
-export const currentUser = 'currentUser';
+export const token = 'Token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private redirectUrl: string;
+  private currentUser: string = 'anonymous';
+  source: string = 'http://localhost:3004/';
+  loginUrl: string = this.source + 'auth/login';
+  userInfoUrl: string = this.source + 'auth/userinfo';
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private httpClient: HttpClient) {
   }
 
   isLoggedIn(): boolean {
-    return this.getUserInfo() !== null;
+    return localStorage.getItem(token) !== null;
   }
 
   logout(): void {
-    localStorage.removeItem(currentUser);
+    localStorage.removeItem(token);
     this.router.navigate(['/login']);
+
+    this.currentUser = 'anonymous';
   }
 
-  login(username: string, password: string): Alert {
-    const userPassword = localStorage.getItem(username);
-    if (password !== null && password === userPassword) {
-      localStorage.setItem(currentUser, username);
-
-      if (this.redirectUrl) {
-        this.router.navigate([this.redirectUrl])
-          .then(this.redirectUrl = null);
-      } else {
-        this.router.navigate(['']);
-      }
-    } else {
-      return Alert.BAD_CREDENTIALS;
-    }
+  login(login: string, password: string): Observable<HttpResponse<object>> {
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    return this.httpClient.post(this.loginUrl, {login, password}, {headers, observe: 'response'})
+      .pipe(tap(resp => {
+        const userToken = (resp.body as {token: string}).token;
+        localStorage.setItem(token, userToken);
+        this.getUserInfo(userToken).subscribe(userName => this.currentUser = userName);
+      }));
   }
 
   setRedirectUrl(url: string) {
     this.redirectUrl = url;
   }
 
-  register(username: string, password: string, repeatedPassword: string): Alert {
-    if (password !== repeatedPassword) {
-      return Alert.PASSWORDS_ARE_DIFFERENT;
-    } else if (localStorage.getItem(username) !== null) {
-      return Alert.USER_HAS_ALREADY_EXIST;
-    }
-
-    localStorage.setItem(username, password);
-    localStorage.setItem(currentUser, username);
-    this.router.navigate(['']);
+  getRedirectUrl(): string {
+    return this.redirectUrl ? this.redirectUrl : '';
   }
 
-  getUserInfo() {
-    return localStorage.getItem(currentUser);
+  getCurrentUser(): string {
+    return this.currentUser;
+  }
+
+  private getUserInfo(userToken: string) {
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    return this.httpClient.post(this.userInfoUrl, {token: userToken}, {headers, observe: 'response'})
+      .pipe(map(resp => (resp.body as {login: string}).login ));
   }
 }

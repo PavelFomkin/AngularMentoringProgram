@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService, token} from '../../services/auth.service';
 import {Router} from '@angular/router';
-import {Alert, AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,19 +10,25 @@ import {Alert, AuthService} from '../../services/auth.service';
 export class LoginComponent implements OnInit {
   username: string;
   password: string;
-  error: Alert;
+  error: string;
 
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
   }
 
   login(): void {
-    this.error = this.authService.login(this.username, this.password);
-  }
+    this.authService.login(this.username, this.password).subscribe(resp => {
+        localStorage.setItem(token, (resp.body as { token: string }).token);
+        this.error = undefined;
 
-  redirectToRegisterPage(): void {
-    this.router.navigate(['registration']);
+        console.log(this.authService.getRedirectUrl());
+        this.router.navigateByUrl(this.authService.getRedirectUrl());
+      },
+      errorResp => {
+        this.error = errorResp.error;
+      });
   }
 }
