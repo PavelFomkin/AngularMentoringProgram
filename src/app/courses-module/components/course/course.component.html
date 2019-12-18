@@ -1,19 +1,19 @@
-<div id="course-frame" [appBorderColorByDate]="course.creationDate"
-     [ngClass]="course.topRated ? 'top-rated-item-color' : 'usual-item-color'">
+<div id="course-frame" [appBorderColorByDate]="course.date"
+     [ngClass]="course.isTopRated ? 'top-rated-item-color' : 'usual-item-color'">
   <div class="course-information">
     <div class="top-row">
       <div class="title">
-        <h4 *appTopRated="course.topRated">{{course.title | uppercase}}</h4>
+        <h4 *appTopRated="course.isTopRated">{{course.name | uppercase}}</h4>
       </div>
       <div class="top-row-time-block">
-        <span>Date/time:<br>{{ course.creationDate | date:'d MMM y'}}</span>
-        <span>Duration:<br>{{ course.duration | duration }}</span>
+        <span>Date/time:<br>{{ course.date | date:'d MMM y'}}</span>
+        <span>Duration:<br>{{ course.length | duration }}</span>
       </div>
     </div>
     <p>{{course.description}}</p>
   </div>
   <div class="buttons">
-    <button id="editButton" class="btn btn-sm btn-primary" onclick="alert('not yet')">Edit</button>
+    <button id="editButton" class="btn btn-sm btn-primary" routerLink="{{course.id}}">Edit</button>
     <button id="removeButton" class="btn btn-sm btn-primary" (click)="removeCourse()">Delete</button>
   </div>
 </div>
