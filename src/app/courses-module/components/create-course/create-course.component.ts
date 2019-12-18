@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
 import {Course} from '../../models/course';
-import {CourseService} from "../../services/course.service";
-import {NgForm} from "@angular/forms";
-import {Router} from "@angular/router";
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-create-course',
@@ -12,15 +12,26 @@ import {Router} from "@angular/router";
 })
 export class CreateCourseComponent {
 
-  constructor(private courseService: CourseService, private router: Router) { }
+  constructor(private httpClient: HttpClient,
+              private router: Router) {
+  }
 
   breadcrumbLinks: BreadcrumbLink[] = [
     {title: 'Courses', url: '/courses'},
-    {title: 'New Course', url: '/create-course'},
+    {title: 'New Course', url: '/courses/new'},
   ];
 
   createCourse(newCourse: NgForm) {
-    this.courseService.createCourse(newCourse.form.value as Course);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    this.httpClient.post<Course>('http://localhost:3004/courses', newCourse.form.value as Course, httpOptions)
+      .subscribe((course: Course) => {
+        console.log(course);
+      });
+
     this.router.navigateByUrl('/courses');
   }
 

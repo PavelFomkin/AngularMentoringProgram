@@ -59,13 +59,13 @@ describe('HeaderComponent', () => {
     const authService = TestBed.get(AuthService);
     const currentUserName = 'Pavel';
     authService.isLoggedIn.and.returnValue(true);
-    authService.getUserInfo.and.returnValue(currentUserName);
+    authService.getCurrentUser.and.returnValue(currentUserName);
 
     fixture.detectChanges();
     const userNameEl: HTMLElement = fixture.debugElement.query(By.css('#userNameEl')).nativeElement;
 
     expect(userNameEl.innerText).toBe(currentUserName);
-    expect(authService.getUserInfo.calls.count()).toBeGreaterThan(0);
+    expect(authService.getCurrentUser.calls.count()).toBeGreaterThan(0);
   });
 
   it('logout button is active and trigger auth service by clicking when a user is authorized', () => {

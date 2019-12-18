@@ -26,13 +26,13 @@ describe('BorderColorByDateDirective', () => {
     expect(component).toBeTruthy();
   });
 
-  it('test element should be green because the creationDate is before now and less than 2 weeks old', () => {
+  it('test element should be green because the date is before now and less than 2 weeks old', () => {
     fixture.detectChanges();
 
     expect(divEl.nativeElement.style.borderColor).toBe('green');
   });
 
-  it('test element should be blue because the creationDate is after now', () => {
+  it('test element should be blue because the date is after now', () => {
     const now: Date = new Date();
     fixture.debugElement.componentInstance.date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, now.getHours());
     fixture.detectChanges();
@@ -40,7 +40,7 @@ describe('BorderColorByDateDirective', () => {
     expect(divEl.nativeElement.style.borderColor).toBe('blue');
   });
 
-  it('test element should have no border because the creationDate is more than 2 weeks old', () => {
+  it('test element should have no border because the date is more than 2 weeks old', () => {
     const now: Date = new Date();
     fixture.debugElement.componentInstance.date = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 15, now.getHours());
     fixture.detectChanges();

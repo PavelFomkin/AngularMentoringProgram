@@ -13,10 +13,8 @@
         <label for="password">Password: </label> <label class="required-label">*required</label>
         <input class="form-control" id="password" name="password" type="password" placeholder="Enter password" [(ngModel)]="password" required>
       </div>
-      <a id="forgot-password" routerLink="/registration">Forgot password?</a>
       <div id="buttons">
         <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="loginForm.form.invalid">Login</button>
-        <button id="registration-button" type="button" class="btn btn-sm btn-success" (click)="redirectToRegisterPage()">Registration</button>
       </div>
     </form>
   </div>
