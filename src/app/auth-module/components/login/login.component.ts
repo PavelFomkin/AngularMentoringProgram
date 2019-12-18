@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
         localStorage.setItem(token, (resp.body as { token: string }).token);
         this.error = undefined;
 
-        console.log(this.authService.getRedirectUrl());
         this.router.navigateByUrl(this.authService.getRedirectUrl());
       },
       errorResp => {
