@@ -1,4 +1,3 @@
 <div id="search-block">
-  <input type="text" placeholder="Text to search" [(ngModel)]="searchData"/>
-  <button class="btn btn-sm btn-success" (click)="searchCourses()">Search</button>
+  <input type="text" placeholder="Text to search" (keyup)="searchCourses()" [(ngModel)]="searchData"/>
 </div>
