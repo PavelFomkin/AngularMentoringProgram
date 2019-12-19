@@ -1,12 +1,24 @@
 <app-breadcrumb [links]="breadcrumbLinks"></app-breadcrumb>
 <div id="new-course">
   <div id="new-course-form">
-    <form name="newCourse" (ngSubmit)="createCourse()" #newCourse="ngForm">
-      <div class="field">
-        <label for="title">Title: </label> <label class="required-label">*required</label>
-        <input class="form-control" id="title" name="title" type="text" [(ngModel)]="newCourse.title" required>
-      </div>
-    <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="newCourse.form.invalid">Create</button>
+    <form name="newCourse" (ngSubmit)="createCourse(newCourse)" #newCourse="ngForm">
+      <label for="title">Title: </label>
+      <input class="form-control" id="title" name="name" type="text" ngModel required> <br>
+
+      <label for="description">Description: </label>
+      <textarea class="form-control" id="description" name="description" type="text" ngModel required></textarea> <br>
+
+      <label for="date">Date: </label>
+      <input class="form-control" id="date" name="date" type="datetime-local" ngModel required> <br>
+
+      <label for="duration">Duration: </label>
+      <input class="form-control" id="duration" name="length" type="number" ngModel required>
+      <label id="duration-view">{{newCourse?.length | duration}} </label> <br> <br>
+
+      <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="newCourse.form.invalid">
+        Save
+      </button>
+      <button id="cancel-button" class="btn btn-sm btn-success" type="button" (click)="goBack()">Cancel</button>
     </form>
   </div>
 </div>

@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CourseComponent} from './course.component';
 import {By} from '@angular/platform-browser';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component} from '@angular/core';
 import {Course} from '../../models/course';
 import {BorderColorByDateDirective} from '../../directives/border-color-directive/border-color-by-date.directive';
 import {TopRatedDirective} from '../../directives/top-rated-directive/top-rated.directive';
@@ -32,7 +32,7 @@ describe('CourseComponent', () => {
   it('input works', () => {
     const courseTitleEl = fixture.debugElement.children[0].query(By.css('h4')).nativeElement;
 
-    expect(courseTitleEl.innerText).toBe(fixture.debugElement.componentInstance.course.title);
+    expect(courseTitleEl.innerText).toBe(fixture.debugElement.componentInstance.course.name);
   });
 
   it('trigger event by clicking remove course', () => {
@@ -54,11 +54,11 @@ describe('CourseComponent', () => {
 export class CourseWrapperComponent {
   course: Course = {
     id: 1,
-    title: 'ANGULAR COURSE',
+    name: 'ANGULAR COURSE',
     description: 'description',
-    duration: 30,
-    creationDate: new Date(),
-    topRated: true
+    length: 30,
+    date: new Date(),
+    isTopRated: true
   };
   testOutput(courseId: number): void {}
 }

@@ -12,6 +12,6 @@ export class ActionsComponent {
   }
 
   addCourse() {
-    this.router.navigate(['/create-course']);
+    this.router.navigateByUrl('/courses/new');
   }
 }

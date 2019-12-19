@@ -13,10 +13,15 @@ import {BorderColorByDateDirective} from './directives/border-color-directive/bo
 import {TopRatedDirective} from './directives/top-rated-directive/top-rated.directive';
 import {DurationPipe} from './pipes/duration-pipe/duration-pipe.pipe';
 import {OrderByPipe} from './pipes/order-by/order-by.pipe';
+import {EditCourseComponent} from './components/edit-course/edit-course.component';
+import {AuthGuard} from '../auth-module/services/auth.guard';
+import {TokenInterceptor} from '../auth-module/services/token-interceptor';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 const routes = [
-  {path: 'courses', component: CoursesComponent},
-  {path: 'create-course', component: CreateCourseComponent},
+  {path: 'courses', component: CoursesComponent, canActivate: [AuthGuard]},
+  {path: 'courses/new', component: CreateCourseComponent, canActivate: [AuthGuard]},
+  {path: 'courses/:id', component: EditCourseComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
@@ -24,6 +29,7 @@ const routes = [
     CourseComponent,
     CoursesComponent,
     CreateCourseComponent,
+    EditCourseComponent,
     ActionsComponent,
     SearchComponent,
     LoadMoreCoursesComponent,
@@ -41,7 +47,13 @@ const routes = [
   exports: [
     CoursesComponent,
     CreateCourseComponent,
-  ]
+    EditCourseComponent,
+  ],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
 })
 export class CoursesModule {
 }
