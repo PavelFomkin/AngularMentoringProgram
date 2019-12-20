@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from '../../models/course';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
-import {HttpClient} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
-import {distinctUntilChanged, filter, mergeAll, switchMap, throttleTime} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {CourseService} from '../../services/course.service';
+import {LoaderService} from '../../../core-module/services/loader.service';
 
 @Component({
   selector: 'app-courses',
@@ -12,7 +13,7 @@ import {distinctUntilChanged, filter, mergeAll, switchMap, throttleTime} from 'r
 })
 export class CoursesComponent implements OnInit {
 
-  searchRequest = new Subject();
+  searchSubject = new Subject<string>();
 
   numberOfCoursesToLoad: number = 5;
   hasMoreCourses: boolean = false;
@@ -23,67 +24,65 @@ export class CoursesComponent implements OnInit {
     {title: 'Courses', url: '/courses'}
   ];
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private courseService: CourseService,
+              private loaderService: LoaderService) {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<Course[]>('http://localhost:3004/courses?start=0&count=' + this.numberOfCoursesToLoad)
-      .subscribe((items: Course[]) => {
-        this.loadedCourses = items;
-        this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
-      });
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((search: string) => {
+        this.loaderService.turnLoaderOn();
+        return this.courseService.searchCourses(this.numberOfCoursesToLoad, search);
+      }),
+    ).subscribe((items: Course[]) => {
+      this.loadedCourses = items;
+      this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
+      this.loaderService.turnLoaderOff();
+    });
+
+    this.getCourses();
   }
 
   removeCourse(id: number) {
     if (confirm('Do you really want to delete this course?')) {
-      this.httpClient.delete<void>('http://localhost:3004/courses' + id)
+      this.loaderService.turnLoaderOn();
+      this.courseService.removeCourse(id)
         .subscribe(() => {
           this.loadedCourses = this.loadedCourses.filter(item => item.id !== id);
+          this.loaderService.turnLoaderOff();
         });
     }
   }
 
   searchCourses(searchData: string) {
-    this.searchRequest.next(searchData);
-
-    // this.loadedCourses = [];
-    this.searchData = searchData ? searchData.trim() : '';
-
-    this.searchRequest.pipe(
-      filter((text: string) => !!text || text.length >= 3),
-      distinctUntilChanged(),
-      throttleTime(250),
-      switchMap(() =>
-        this.httpClient.get<Course[]>('http://localhost:3004/courses?start=0&count=' + this.numberOfCoursesToLoad
-        + '&textFragment=' + this.searchData)),
-    ).subscribe((items: Course[]) => {
-      this.loadedCourses = items;
-      this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
-    });
-
-    // this.httpClient.get<Course[]>('http://localhost:3004/courses?start=0&count=' + this.numberOfCoursesToLoad
-    //   + '&textFragment=' + this.searchData)
-    //   .subscribe((items: Course[]) => {
-    //     this.loadedCourses = items;
-    //     this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
-    //   });
+    if (!!searchData && searchData.trim().length >= 3) {
+      this.searchData = searchData.trim();
+      this.searchSubject.next(this.searchData);
+    } else if (!searchData) {
+      this.getCourses();
+    }
   }
 
   loadMore() {
-    let attributes;
-    if (this.searchData) {
-      attributes = 'start=' + this.loadedCourses.length
-        + '&count=' + this.numberOfCoursesToLoad
-        + '&textFragment=' + this.searchData;
-    } else {
-      attributes = 'start=' + this.loadedCourses.length
-        + '&count=' + this.numberOfCoursesToLoad;
-    }
-    this.httpClient.get<Course[]>('http://localhost:3004/courses?' + attributes)
+    this.loaderService.turnLoaderOn();
+    this.courseService.loadMore(this.loadedCourses.length, this.numberOfCoursesToLoad, this.searchData)
       .subscribe((items: Course[]) => {
         const expectedCountOfCourses = this.loadedCourses.length + this.numberOfCoursesToLoad;
         this.loadedCourses = [...this.loadedCourses, ...items];
         this.hasMoreCourses = expectedCountOfCourses <= this.loadedCourses.length;
+        this.loaderService.turnLoaderOff();
+      });
+  }
+
+  private getCourses() {
+    this.loaderService.turnLoaderOn();
+    this.courseService.getCourses(this.numberOfCoursesToLoad)
+      .subscribe((items: Course[]) => {
+        this.loadedCourses = items;
+        this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
+        this.loaderService.turnLoaderOff();
       });
   }
 }

@@ -4,7 +4,8 @@ import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {AuthModule} from '../auth-module/auth.module';
 import {RouterModule} from '@angular/router';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import {NotFoundComponent} from './components/not-found/not-found.component';
+import {LoaderComponent} from './components/loader/loader.component';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     HeaderComponent,
     FooterComponent,
     NotFoundComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
   exports: [
     HeaderComponent,
     FooterComponent,
+    LoaderComponent,
   ]
 })
 export class CoreModule {
