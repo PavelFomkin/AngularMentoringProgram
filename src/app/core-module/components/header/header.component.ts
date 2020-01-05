@@ -1,5 +1,10 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../../../auth-module/services/auth.service';
+import {AuthState} from '../../../auth-module/store/auth.state';
+import {Store} from '@ngrx/store';
+import {selectUserName} from '../../../auth-module/store/selectors/auth.selector';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +13,11 @@ import {AuthService} from '../../../auth-module/services/auth.service';
 })
 export class HeaderComponent {
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private store: Store<AuthState>) {
   }
 
-  isLoggedIn() {
+  isLoggedIn(): Observable<boolean> {
     return this.authService.isLoggedIn();
   }
 
@@ -19,7 +25,8 @@ export class HeaderComponent {
     this.authService.logout();
   }
 
-  getCurrentUser(): string {
-    return this.authService.getCurrentUser();
+  getCurrentUser(): Observable<string> {
+    return this.store.select(selectUserName);
+    // return this.authService.getCurrentUser();
   }
 }

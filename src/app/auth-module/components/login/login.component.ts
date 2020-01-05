@@ -2,6 +2,11 @@ import {Component} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {LoaderService} from '../../../core-module/services/loader.service';
+import {AuthState} from '../../store/auth.state';
+import {Store} from '@ngrx/store';
+import {login} from '../../store/actions/auth.actions';
+import {selectRedirectUrl} from '../../store/selectors/auth.selector';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -15,19 +20,18 @@ export class LoginComponent {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private loaderService: LoaderService) {
+              private loaderService: LoaderService,
+              private store: Store<AuthState>) {
   }
 
   login(): void {
     this.loaderService.turnLoaderOn();
     this.authService.login(this.username, this.password).subscribe(() => {
-        this.error = undefined;
-        this.loaderService.turnLoaderOff();
-        this.router.navigateByUrl(this.authService.getRedirectUrl());
-      },
-      errorResp => {
-        this.error = errorResp.error;
-        this.loaderService.turnLoaderOff();
+        this.store.dispatch(login);
+        this.store.select(selectRedirectUrl).pipe(
+          map(url => this.router.navigateByUrl(url))
+        );
       });
+    this.loaderService.turnLoaderOff();
   }
 }

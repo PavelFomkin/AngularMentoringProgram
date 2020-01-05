@@ -2,9 +2,9 @@
   <a id="logo" routerLink="">
     <img src="/assets/images/logo.png" alt="Logo">
   </a>
-  <nav class="header-nav" *ngIf="isLoggedIn(); else noAuth">
+  <nav class="header-nav" *ngIf="isLoggedIn() | async; else noAuth">
     <a id="userNameEl">
-      <img class="smallIcon" src="/assets/images/user.png" alt=""/><span>{{getCurrentUser()}}</span>
+      <img class="smallIcon" src="/assets/images/user.png" alt=""/><span>{{getCurrentUser() | async}}</span>
     </a>
     <a id="signOutEl" (click)="signOut()" routerLink="login">
       <img class="smallIcon" src="/assets/images/logout.png" alt=""/><span>Log Out</span>
