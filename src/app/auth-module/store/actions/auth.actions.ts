@@ -1,19 +1,28 @@
-import {createAction, props} from '@ngrx/store';
+import {Action} from '@ngrx/store';
 import {User} from '../../models/user';
 
-export const login = createAction('[Auth] Log in', props<{ username: string, password: string }>());
-export const loginSuccess = createAction('[Auth] Login success', props<{ user: User }>());
-export const loginFail = createAction('[Auth] Login fail', props<{ error: string }>());
+export enum authActions {
+  login = '[Auth] Log in',
+  setUserInfo = '[Auth] Set user info',
+  setError = '[Auth] Set error',
+  logout = '[Auth] Log out',
+}
 
-// export const setError = createAction('[Auth] Set error', props<{ error: string }>());
-// export const removeError = createAction('[Auth] Remove error');
+export class LoginAction implements Action {
+  readonly type: string = authActions.login;
+  constructor(public payload: { username: string, password: string }) { }
+}
 
-export const setRedirectUrl = createAction('[Auth] Set redirect url', props<{ redirectUrl: string }>());
-export const removeRedirectUrl = createAction('[Auth] Remove redirect url');
+export class SetUserInfoAction implements Action {
+  readonly type: string = authActions.setUserInfo;
+  constructor(public payload: User) { }
+}
 
-export const setUser = createAction('[Auth] Set user', props<{ user: User }>());
-export const refreshUserInfo = createAction('[Auth] Refresh user info', props<{ token: string }>());
-export const removeUser = createAction('[Auth] Remove user');
+export class SetErrorAction implements Action {
+  readonly type: string = authActions.setError;
+  constructor(public payload: string) { }
+}
 
-// export const saveToken = createAction('[Auth] Save token', props<{ token: string }>());
-// export const removeToken = createAction('[Auth] Remove token');
+export class LogoutAction implements Action {
+  readonly type: string = authActions.logout;
+}

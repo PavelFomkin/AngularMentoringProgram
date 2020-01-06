@@ -2,7 +2,7 @@
   <div id="login-form">
     <div>
       <h3 class="auth-form-name">Login</h3>
-      <h5 class="error-message" *ngIf="error !== null">{{error}}</h5>
+      <h5 class="error-message">{{error$ | async}}</h5>
     </div>
     <form name="loginForm" (ngSubmit)="login()" #loginForm="ngForm">
       <div class="field">

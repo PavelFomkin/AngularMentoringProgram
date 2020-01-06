@@ -2,9 +2,10 @@ import {Component} from '@angular/core';
 import {AuthService} from '../../../auth-module/services/auth.service';
 import {AuthState} from '../../../auth-module/store/auth.state';
 import {Store} from '@ngrx/store';
-import {selectUserName} from '../../../auth-module/store/selectors/auth.selector';
+import {selectToken, selectUserName} from '../../../auth-module/store/selectors/auth.selector';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {LogoutAction} from "../../../auth-module/store/actions/auth.actions";
 
 @Component({
   selector: 'app-header',
@@ -18,15 +19,15 @@ export class HeaderComponent {
   }
 
   isLoggedIn(): Observable<boolean> {
-    return this.authService.isLoggedIn();
+    return this.store.select(selectToken).pipe(
+      map(token => token !== null));
   }
 
   signOut() {
-    this.authService.logout();
+    this.store.dispatch(new LogoutAction());
   }
 
   getCurrentUser(): Observable<string> {
     return this.store.select(selectUserName);
-    // return this.authService.getCurrentUser();
   }
 }

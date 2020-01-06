@@ -1,46 +1,34 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {CanActivate, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {AuthState} from '../store/auth.state';
-import {refreshUserInfo, setRedirectUrl} from '../store/actions/auth.actions';
 import {selectToken} from '../store/selectors/auth.selector';
-import {Observable} from 'rxjs';
-import {distinctUntilChanged, map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs/operators';
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router,
-              private store: Store<AuthState>) {
+              private store: Store<AuthState>,
+              private authService: AuthService) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    const url: string = state.url;
+  canActivate(): Observable<boolean> {
     return this.store.select(selectToken).pipe(
-      distinctUntilChanged(),
-      map(token => {
+      switchMap(token => {
         if (token === null) {
-          this.saveRedirectUrlAndNavigateToLoginPage(url);
-          return false;
+          this.router.navigate(['/login']);
+          return of(false);
         }
 
-        this.store.dispatch(refreshUserInfo({token})); // check that token is valid
-        this.store.select(selectToken).pipe(
-          map(token => {
-            if (token === null) {
-              this.saveRedirectUrlAndNavigateToLoginPage(url);
-              return false;
-            }
-            return true;
-          }));
-      }));
+        return this.authService.getUserInfo(token).pipe(
+          map(() => true),
+          catchError(() => of(false))
+        );
+      })
+    );
   }
-
-  private saveRedirectUrlAndNavigateToLoginPage(redirectUrl: string): void {
-    // Store the attempted URL for redirecting
-    this.store.dispatch(setRedirectUrl({redirectUrl}));
-    this.router.navigate(['/login']);
-  }
-
 }
