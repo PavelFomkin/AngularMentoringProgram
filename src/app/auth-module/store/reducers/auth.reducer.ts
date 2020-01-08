@@ -2,7 +2,7 @@ import {Action} from '@ngrx/store';
 import {AuthState} from '../auth.state';
 import {authActions, SetErrorAction, SetUserInfoAction} from '../actions/auth.actions';
 
-export const initialState: AuthState = {
+const initialState: AuthState = {
   user: null,
   error: null,
 };
@@ -16,6 +16,6 @@ export function authReducer(state: AuthState = initialState, action: Action) {
     case authActions.logout:
       return initialState;
     default:
-      return ({...state});
+      return state;
   }
 }

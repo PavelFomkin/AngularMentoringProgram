@@ -17,9 +17,15 @@ import {EditCourseComponent} from './components/edit-course/edit-course.componen
 import {AuthGuard} from '../auth-module/services/auth.guard';
 import {TokenInterceptor} from '../auth-module/services/token-interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
+import {coursesReducer} from "./store/reducers/courses.reducer";
+import {CoursesEffects} from "./store/effects/courses.effect";
+import {coursesState} from "./store/selectors/courses.selector";
 
 const routes = [
-  {path: 'courses', component: CoursesComponent, canActivate: [AuthGuard]},
+  {path: 'courses', component: CoursesComponent},
+  // {path: 'courses', component: CoursesComponent, canActivate: [AuthGuard]},
   {path: 'courses/new', component: CreateCourseComponent, canActivate: [AuthGuard]},
   {path: 'courses/:id', component: EditCourseComponent, canActivate: [AuthGuard]},
 ];
@@ -41,6 +47,8 @@ const routes = [
   imports: [
     CommonModule,
     RouterModule.forRoot(routes),
+    StoreModule.forFeature(coursesState, coursesReducer),
+    EffectsModule.forFeature([CoursesEffects]),
     FormsModule,
     SharedModule,
   ],

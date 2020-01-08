@@ -7,6 +7,7 @@ import {StoreModule} from '@ngrx/store';
 import {authReducer} from './store/reducers/auth.reducer';
 import {AuthEffects} from "./store/effects/auth.effect";
 import {EffectsModule} from '@ngrx/effects';
+import {authState} from "./store/selectors/auth.selector";
 
 const routes = [
   {path: 'login', component: LoginComponent},
@@ -19,10 +20,8 @@ const routes = [
   imports: [
     CommonModule,
     RouterModule.forRoot(routes),
-    StoreModule.forRoot({
-      authState: authReducer,
-    }),
-    EffectsModule.forRoot([AuthEffects]),
+    StoreModule.forFeature(authState, authReducer),
+    EffectsModule.forFeature([AuthEffects]),
     FormsModule,
   ],
   exports: [

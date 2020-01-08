@@ -2,14 +2,15 @@ import {AuthState} from '../auth.state';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {User} from '../../models/user';
 
-export const getProductsState = createFeatureSelector('authState');
+export const authState = 'authState';
+export const getAuthState = createFeatureSelector(authState);
 
 export const selectUser = createSelector(
-  getProductsState,
+  getAuthState,
   (state: AuthState) => state.user
 );
 export const selectError = createSelector(
-  getProductsState,
+  getAuthState,
   (state: AuthState) => state.error
 );
 
