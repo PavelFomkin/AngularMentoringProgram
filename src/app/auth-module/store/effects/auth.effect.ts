@@ -20,7 +20,6 @@ export class AuthEffects {
               private loader: LoaderService) {
   }
 
-  @Effect()
   login$ = createEffect(() => this.actions$.pipe(
     ofType(authActions.login),
     tap(() => this.loader.turnLoaderOn()),

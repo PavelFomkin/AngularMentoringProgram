@@ -24,7 +24,6 @@ export class CoursesEffects {
               private loader: LoaderService) {
   }
 
-  @Effect()
   getCourses$ = createEffect(() => this.actions$.pipe(
     ofType(coursesActions.loadCourses),
     tap(() => this.loader.turnLoaderOn()),
