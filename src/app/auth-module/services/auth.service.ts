@@ -14,11 +14,11 @@ export class AuthService {
 
   public login(login: string, password: string): Observable<HttpResponse<any>> {
     const headers = {'Content-Type': 'application/json'};
-    return this.httpClient.post<{ token: string }>(this.loginUrl, {login, password}, {headers, observe: 'response'})
+    return this.httpClient.post<{ token: string }>(this.loginUrl, {login, password}, {headers, observe: 'response'});
   }
 
   public getUserInfo(userToken: string): Observable<HttpResponse<any>> {
     const headers = {'Content-Type': 'application/json'};
-    return this.httpClient.post(this.userInfoUrl, {token: userToken}, {headers, observe: 'response'})
+    return this.httpClient.post(this.userInfoUrl, {token: userToken}, {headers, observe: 'response'});
   }
 }

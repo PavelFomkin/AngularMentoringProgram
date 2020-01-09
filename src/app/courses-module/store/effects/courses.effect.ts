@@ -5,13 +5,13 @@ import {
   SetCoursesAction,
   SetHasMoreCoursesFlagAction
 } from '../actions/courses.actions';
-import {catchError, exhaustMap, finalize, map, switchMap, tap} from 'rxjs/operators';
+import {catchError, finalize, map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Store} from '@ngrx/store';
-import {CoursesState} from "../courses.state";
-import {Router} from "@angular/router";
-import {LoaderService} from "../../../core-module/services/loader.service";
-import {CourseService} from "../../services/course.service";
+import {CoursesState} from '../courses.state';
+import {Router} from '@angular/router';
+import {LoaderService} from '../../../core-module/services/loader.service';
+import {CourseService} from '../../services/course.service';
 
 @Injectable()
 export class CoursesEffects {

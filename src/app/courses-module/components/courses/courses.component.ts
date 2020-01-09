@@ -2,13 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {Course} from '../../models/course';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
 import {Observable, of, Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CourseService} from '../../services/course.service';
 import {LoaderService} from '../../../core-module/services/loader.service';
-import {CoursesState} from "../../store/courses.state";
-import {Store} from "@ngrx/store";
-import {LoadCoursesAction} from "../../store/actions/courses.actions";
-import {selectCourses, selectHasMoreCourses} from "../../store/selectors/courses.selector";
+import {CoursesState} from '../../store/courses.state';
+import {Store} from '@ngrx/store';
+import {LoadCoursesAction} from '../../store/actions/courses.actions';
+import {selectCourses, selectHasMoreCourses} from '../../store/selectors/courses.selector';
 
 @Component({
   selector: 'app-courses',

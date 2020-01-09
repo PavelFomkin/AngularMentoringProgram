@@ -17,11 +17,11 @@ import {EditCourseComponent} from './components/edit-course/edit-course.componen
 import {AuthGuard} from '../auth-module/services/auth.guard';
 import {TokenInterceptor} from '../auth-module/services/token-interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {StoreModule} from "@ngrx/store";
-import {EffectsModule} from "@ngrx/effects";
-import {coursesReducer} from "./store/reducers/courses.reducer";
-import {CoursesEffects} from "./store/effects/courses.effect";
-import {coursesState} from "./store/selectors/courses.selector";
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {coursesReducer} from './store/reducers/courses.reducer';
+import {CoursesEffects} from './store/effects/courses.effect';
+import {coursesState} from './store/selectors/courses.selector';
 
 const routes = [
   {path: 'courses', component: CoursesComponent},

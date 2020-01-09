@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AuthState} from "../store/auth.state";
-import {Store} from "@ngrx/store";
-import {selectToken} from "../store/selectors/auth.selector";
-import {first, switchMap} from "rxjs/operators";
+import {AuthState} from '../store/auth.state';
+import {Store} from '@ngrx/store';
+import {selectToken} from '../store/selectors/auth.selector';
+import {first, switchMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

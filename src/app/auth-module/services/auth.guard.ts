@@ -5,7 +5,7 @@ import {AuthState} from '../store/auth.state';
 import {selectToken} from '../store/selectors/auth.selector';
 import {Observable, of} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
-import {AuthService} from "./auth.service";
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'

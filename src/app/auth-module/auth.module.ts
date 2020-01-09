@@ -5,9 +5,9 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {StoreModule} from '@ngrx/store';
 import {authReducer} from './store/reducers/auth.reducer';
-import {AuthEffects} from "./store/effects/auth.effect";
+import {AuthEffects} from './store/effects/auth.effect';
 import {EffectsModule} from '@ngrx/effects';
-import {authState} from "./store/selectors/auth.selector";
+import {authState} from './store/selectors/auth.selector';
 
 const routes = [
   {path: 'login', component: LoginComponent},
@@ -21,7 +21,7 @@ const routes = [
     CommonModule,
     RouterModule.forRoot(routes),
     StoreModule.forFeature(authState, authReducer),
-    EffectsModule.forFeature([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     FormsModule,
   ],
   exports: [

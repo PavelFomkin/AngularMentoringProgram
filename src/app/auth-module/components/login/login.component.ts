@@ -5,8 +5,8 @@ import {LoaderService} from '../../../core-module/services/loader.service';
 import {AuthState} from '../../store/auth.state';
 import {Store} from '@ngrx/store';
 import {selectError} from '../../store/selectors/auth.selector';
-import {LoginAction} from "../../store/actions/auth.actions";
-import {Observable} from "rxjs";
+import {LoginAction} from '../../store/actions/auth.actions';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-login',

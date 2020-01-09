@@ -5,7 +5,7 @@ import {Store} from '@ngrx/store';
 import {selectToken, selectUserName} from '../../../auth-module/store/selectors/auth.selector';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {LogoutAction} from "../../../auth-module/store/actions/auth.actions";
+import {LogoutAction} from '../../../auth-module/store/actions/auth.actions';
 
 @Component({
   selector: 'app-header',
