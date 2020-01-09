@@ -5,20 +5,19 @@ import {
   SetCoursesAction,
   SetHasMoreCoursesFlagAction
 } from '../actions/courses.actions';
-import {catchError, finalize, map, switchMap, tap} from 'rxjs/operators';
+import {catchError, finalize, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {CoursesState} from '../courses.state';
 import {Router} from '@angular/router';
 import {LoaderService} from '../../../core-module/services/loader.service';
 import {CourseService} from '../../services/course.service';
+import {selectCountOfCourses, selectSearchData} from "../selectors/courses.selector";
 
 @Injectable()
 export class CoursesEffects {
-  private numberOfCoursesToLoad: number = 5;
-
-  constructor(private actions$: Actions,
-              private store: Store<CoursesState>,
+    constructor(private actions$: Actions,
+              private store$: Store<CoursesState>,
               private courseService: CourseService,
               private router: Router,
               private loader: LoaderService) {
@@ -27,14 +26,20 @@ export class CoursesEffects {
   getCourses$ = createEffect(() => this.actions$.pipe(
     ofType(coursesActions.loadCourses),
     tap(() => this.loader.turnLoaderOn()),
-    switchMap(() =>
-      this.courseService.getCourses(this.numberOfCoursesToLoad).pipe(
+    mergeMap(() =>
+      this.courseService.getCourses().pipe(
         map(courses => new SetCoursesAction(courses)),
         catchError(() => of(new SetHasMoreCoursesFlagAction(false))),
         finalize(() => this.loader.turnLoaderOff()),
       )
     )
   ));
+
+  getMoreCourses = createEffect(() => this.actions$.pipe(
+    ofType(coursesActions.loadMoreCourses),
+    tap(() => this.loader.turnLoaderOn()),
+
+  ))
 
   // @Effect()
   // login$ = createEffect(() => this.actions$.pipe(

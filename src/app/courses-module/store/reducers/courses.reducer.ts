@@ -1,6 +1,7 @@
 import {Action} from '@ngrx/store';
 import {CoursesState} from '../courses.state';
 import {
+  AddCoursesAction,
   coursesActions,
   SetCoursesAction,
   SetHasMoreCoursesFlagAction
@@ -15,7 +16,9 @@ const initialState: CoursesState = {
 export function coursesReducer(state: CoursesState = initialState, action: Action) {
   switch (action.type) {
     case coursesActions.setCourses:
-      return ({...state, courses: [...state.courses, (action as SetCoursesAction).payload]});
+      return ({...state, courses: (action as SetCoursesAction).payload});
+    case coursesActions.addCourses:
+      return ({...state, courses: state.courses.concat((action as AddCoursesAction).payload)});
     case coursesActions.setHasMoreCoursesFlag:
       return ({...state, hasMoreCourses: (action as SetHasMoreCoursesFlagAction).payload});
     default:

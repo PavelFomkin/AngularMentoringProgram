@@ -2,7 +2,7 @@
 <div id="courses">
   <app-search (search)="searchCourses($event)"></app-search>
   <app-actions></app-actions>
-  <div *ngIf="(loadedCourses | async)?.length > 0 || (hasMoreCourses | async); else noCourses">
+  <div *ngIf="(hasLoadedCourses | async) || (hasMoreCourses | async); else noCourses">
     <app-course *ngFor="let course of loadedCourses | async | orderBy: 'date'" [course]="course" (remove)="removeCourse($event)"></app-course>
     <app-load-more-courses [hasMoreCourses]="hasMoreCourses | async"
                            (loadMoreCourses)="loadMore()"></app-load-more-courses>
