@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {BreadcrumbComponent} from './breadcrumb.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component} from '@angular/core';
 import {BreadcrumbLink} from '../../models/breadcrumb-link';
 import {RouterTestingModule} from '@angular/router/testing';
 import {By} from '@angular/platform-browser';

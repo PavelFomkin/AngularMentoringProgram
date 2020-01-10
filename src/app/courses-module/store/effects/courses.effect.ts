@@ -14,7 +14,7 @@ import {
   UpdateEditableCourseAction
 } from '../actions/courses.actions';
 import {catchError, finalize, map, mergeMap, tap, withLatestFrom} from 'rxjs/operators';
-import {EMPTY, of} from 'rxjs';
+import {EMPTY} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {CoursesState} from '../courses.state';
 import {Router} from '@angular/router';

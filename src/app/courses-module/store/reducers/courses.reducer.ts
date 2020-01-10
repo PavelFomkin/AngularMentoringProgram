@@ -2,9 +2,12 @@ import {Action} from '@ngrx/store';
 import {CoursesState} from '../courses.state';
 import {
   AddCoursesAction,
-  coursesActions, RemoveCourseAction,
-  SetCoursesAction, SetEditableCourseAction,
-  SetHasMoreCoursesFlagAction, SetSearchDataAction, UpdateEditableCourseAction
+  coursesActions,
+  RemoveCourseAction,
+  SetCoursesAction,
+  SetEditableCourseAction,
+  SetHasMoreCoursesFlagAction,
+  SetSearchDataAction
 } from '../actions/courses.actions';
 
 const initialState: CoursesState = {

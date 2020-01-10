@@ -5,9 +5,9 @@ import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
 import {CoursesState} from '../../store/courses.state';
 import {Store} from '@ngrx/store';
-import {selectCourse, selectCourses, selectEditableCourse} from '../../store/selectors/courses.selector';
+import {selectCourse, selectEditableCourse} from '../../store/selectors/courses.selector';
 import {SetEditableCourseAction, UpdateEditableCourseAction} from '../../store/actions/courses.actions';
-import {filter, map, mergeMap, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-course',

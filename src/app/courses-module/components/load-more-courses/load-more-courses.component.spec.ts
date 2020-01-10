@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoadMoreCoursesComponent } from './load-more-courses.component';
+import {LoadMoreCoursesComponent} from './load-more-courses.component';
 import {Component} from '@angular/core';
 import {By} from '@angular/platform-browser';
 

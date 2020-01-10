@@ -1,4 +1,4 @@
-import { TopRatedDirective } from './top-rated.directive';
+import {TopRatedDirective} from './top-rated.directive';
 
 describe('TopRatedDirective', () => {
   it('should create an instance', () => {

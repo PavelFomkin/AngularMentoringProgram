@@ -1,4 +1,4 @@
-import {TestBed, async} from '@angular/core/testing';
+import {async, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './core-module/components/header/header.component';
 import {FooterComponent} from './core-module/components/footer/footer.component';
