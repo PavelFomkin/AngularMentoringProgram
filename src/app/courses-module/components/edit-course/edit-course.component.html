@@ -1,19 +1,20 @@
 <app-breadcrumb [links]="breadcrumbLinks"></app-breadcrumb>
 <div id="new-course">
   <div id="new-course-form">
-    <form *ngIf="course" name="newCourse" (ngSubmit)="updateCourse()">
+    <form *ngIf="(course | async) as editableCourse" name="editableCourse" (ngSubmit)="updateCourse(editableCourse)">
       <label for="title">Title: </label>
-      <input class="form-control" id="title" name="name" type="text" [(ngModel)]="course.name" required> <br>
+      <input class="form-control" id="title" name="name" type="text" [(ngModel)]="editableCourse.name" required> <br>
 
       <label for="description">Description: </label>
-      <textarea class="form-control" id="description" name="description" type="text" [(ngModel)]="course.description" required></textarea> <br>
+      <textarea class="form-control" id="description" name="description" type="text" [(ngModel)]="editableCourse.description" required></textarea> <br>
 
       <label for="date">Date: </label>
-      <input class="form-control" id="date" name="date" type="datetime-local" [ngModel]="course.date | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="course.date = $event" required> <br>
+      <input class="form-control" id="date" name="date" type="datetime-local" [ngModel]="editableCourse.date | date:'yyyy-MM-ddTHH:mm'"
+             (ngModelChange)="editableCourse.date = $event" required> <br>
 
       <label for="duration">Duration: </label>
-      <input class="form-control" id="duration" name="length" type="number" [(ngModel)]="course.length" required>
-      <label id="duration-view">{{course?.length | duration}} </label> <br> <br>
+      <input class="form-control" id="duration" name="length" type="number" [(ngModel)]="editableCourse.length" required>
+      <label id="duration-view">{{editableCourse?.length | duration}} </label> <br> <br>
 
       <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="false">
         Save

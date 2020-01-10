@@ -1,59 +1,45 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
 import {Course} from '../../models/course';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {CoursesState} from '../../store/courses.state';
+import {Store} from '@ngrx/store';
+import {selectCourse, selectCourses, selectEditableCourse} from '../../store/selectors/courses.selector';
+import {SetEditableCourseAction, UpdateEditableCourseAction} from '../../store/actions/courses.actions';
+import {filter, map, mergeMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-course',
   templateUrl: './edit-course.component.html',
   styleUrls: ['./edit-course.component.css']
 })
-export class EditCourseComponent implements OnInit, OnDestroy {
+export class EditCourseComponent implements OnInit {
 
   private ID_FIELD: string = 'id';
-  private subscription: Subscription;
-  private course: Course;
+  course: Observable<Course> = this.store$.select(selectEditableCourse);
+  id: number;
 
   breadcrumbLinks: BreadcrumbLink[] = [
     {title: 'Courses', url: '/courses'},
-    {title: 'course ', url: '/courses/:id'},
+    {title: 'course ', url: '/courses/' + this.id},
   ];
 
   constructor(private activateRouter: ActivatedRoute,
-              private httpClient: HttpClient,
-              private router: Router) {
-  }
+              private store$: Store<CoursesState>) { }
 
   ngOnInit(): void {
-    const param: number = this.activateRouter.snapshot.params[this.ID_FIELD];
-
-    this.subscription = this.httpClient.get<Course>('http://localhost:3004/courses/' + param)
-      .subscribe((course: Course) => {
-        this.course = course;
-        this.breadcrumbLinks[1].title += course.id.toString();
-      });
+    this.id = this.activateRouter.snapshot.params[this.ID_FIELD];
+    this.store$.select(selectCourse(this.id)).pipe(
+      tap(course => this.store$.dispatch(new SetEditableCourseAction(course))),
+    ).subscribe();
   }
 
-  updateCourse() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    };
-    this.httpClient.patch<Course>('http://localhost:3004/courses/' + this.course.id, this.course, httpOptions)
-      .subscribe((course: Course) => {
-        console.log(course);
-      });
-    this.router.navigateByUrl('/courses');
+  updateCourse(editableCourse: Course) {
+    this.store$.dispatch(new UpdateEditableCourseAction(editableCourse));
   }
 
   goBack() {
     history.back();
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }

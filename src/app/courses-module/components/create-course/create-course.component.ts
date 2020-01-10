@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
-import {Course} from '../../models/course';
 import {NgForm} from '@angular/forms';
-import {Router} from '@angular/router';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {CoursesState} from '../../store/courses.state';
+import {Store} from '@ngrx/store';
+import {SaveNewCourseAction} from '../../store/actions/courses.actions';
 
 @Component({
   selector: 'app-create-course',
@@ -12,9 +12,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class CreateCourseComponent {
 
-  constructor(private httpClient: HttpClient,
-              private router: Router) {
-  }
+  constructor(private store$: Store<CoursesState>) { }
 
   breadcrumbLinks: BreadcrumbLink[] = [
     {title: 'Courses', url: '/courses'},
@@ -22,17 +20,7 @@ export class CreateCourseComponent {
   ];
 
   createCourse(newCourse: NgForm) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    };
-    this.httpClient.post<Course>('http://localhost:3004/courses', newCourse.form.value as Course, httpOptions)
-      .subscribe((course: Course) => {
-        console.log(course);
-      });
-
-    this.router.navigateByUrl('/courses');
+    this.store$.dispatch(new SaveNewCourseAction(newCourse.form.value));
   }
 
   goBack() {
