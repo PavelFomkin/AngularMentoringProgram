@@ -8,7 +8,7 @@ import {BorderColorByDateDirective} from '../../directives/border-color-directiv
 import {TopRatedDirective} from '../../directives/top-rated-directive/top-rated.directive';
 import {DurationPipe} from '../../pipes/duration-pipe/duration-pipe.pipe';
 
-describe('CourseComponent', () => {
+describe('AuthorComponent', () => {
   let component: CourseComponent;
   let fixture: ComponentFixture<CourseWrapperComponent>;
 
@@ -58,7 +58,8 @@ export class CourseWrapperComponent {
     description: 'description',
     length: 30,
     date: new Date(),
-    isTopRated: true
+    isTopRated: true,
+    authors: []
   };
   testOutput(courseId: number): void {}
 }

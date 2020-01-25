@@ -7,6 +7,7 @@ import {Store} from '@ngrx/store';
 import {selectError} from '../../store/selectors/auth.selector';
 import {LoginAction} from '../../store/actions/auth.actions';
 import {Observable} from 'rxjs';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -14,17 +15,21 @@ import {Observable} from 'rxjs';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  username: string;
-  password: string;
+  form: FormGroup;
   error$: Observable<string> = this.store$.select(selectError);
 
   constructor(private authService: AuthService,
               private router: Router,
               private loaderService: LoaderService,
               private store$: Store<AuthState>) {
+   this.form = new FormGroup({
+     username: new FormControl('', [Validators.required]),
+     password: new FormControl('', [Validators.required]),
+     }
+   );
   }
 
   login(): void {
-    this.store$.dispatch(new LoginAction({username: this.username, password: this.password}));
+    this.store$.dispatch(new LoginAction({username: this.form.get('username').value, password: this.form.get('password').value}));
   }
 }

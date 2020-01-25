@@ -1,6 +1,8 @@
 <app-breadcrumb [links]=breadcrumbLinks></app-breadcrumb>
 <div id="courses">
-  <app-search (search)="searchCourses($event)"></app-search>
+  <form [formGroup]="searchForm" (ngSubmit)="searchCourses(searchForm.get('searchData').value)">
+    <app-search formControlName="search"></app-search>
+  </form>
   <app-actions></app-actions>
   <div *ngIf="(hasLoadedCourses | async) || (hasMoreCourses | async); else noCourses">
     <app-course *ngFor="let course of loadedCourses | async | orderBy: 'date'" [course]="course" (remove)="removeCourse($event)"></app-course>

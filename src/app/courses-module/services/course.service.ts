@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Course} from '../models/course';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Author} from '../models/author';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,9 @@ export class CourseService {
       attributes += '&textFragment=' + searchData;
     }
 
-    return this.httpClient.get<Course[]>('http://localhost:3004/courses?' + attributes);
+    return this.httpClient.get<Course[]>('http://localhost:3004/courses?' + attributes).pipe(
+      map(courses => this._transformStringToDate(courses))
+    );
   }
 
   loadMore(startCourseNumber: number, searchData?: string): Observable<Course[]> {
@@ -27,7 +31,9 @@ export class CourseService {
       attributes += '&textFragment=' + searchData;
     }
 
-    return this.httpClient.get<Course[]>('http://localhost:3004/courses?' + attributes);
+    return this.httpClient.get<Course[]>('http://localhost:3004/courses?' + attributes).pipe(
+      map(courses => this._transformStringToDate(courses))
+    );
   }
 
   getCourse(id: number): Observable<Course> {
@@ -54,5 +60,23 @@ export class CourseService {
       })
     };
     return this.httpClient.patch<Course>('http://localhost:3004/courses/' + course.id, course, httpOptions);
+  }
+
+  getAuthors(searchData: string): Observable<Author[]> {
+    let attributes = '';
+    if (searchData) {
+      attributes += '?textFragment=' + searchData;
+    }
+
+    return this.httpClient.get<Author[]>('http://localhost:3004/authors' + attributes);
+  }
+
+  private _transformStringToDate(courses: Course[]): Course[] {
+    courses.forEach(course => {
+      if (/^\d{1,2}.\d{1,2}.\d{4}$/.test(course.date.toString())) {
+        course.date.toString().split('.')
+      }
+    });
+    return courses;
   }
 }

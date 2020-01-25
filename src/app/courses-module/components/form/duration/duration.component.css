@@ -1,0 +1,12 @@
+#duration {
+  width: 300px;
+}
+
+.error {
+  color: red;
+  float: right;
+}
+
+.input-error  {
+  border-left: 5px solid #a94442; /* red */
+}

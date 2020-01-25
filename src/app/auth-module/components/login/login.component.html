@@ -4,17 +4,19 @@
       <h3 class="auth-form-name">Login</h3>
       <h5 class="error-message">{{error$ | async}}</h5>
     </div>
-    <form name="loginForm" (ngSubmit)="login()" #loginForm="ngForm">
+    <form [formGroup]="form" (ngSubmit)="login()">
       <div class="field">
         <label for="login">E-mail: </label> <label class="required-label">*required</label>
-        <input class="form-control" id="login" name="login" type="text" placeholder="Enter e-mail" [(ngModel)]="username" required>
+        <input class="form-control" id="login" name="login" type="text" placeholder="Enter e-mail"
+               formControlName="username">
       </div>
       <div class="field">
         <label for="password">Password: </label> <label class="required-label">*required</label>
-        <input class="form-control" id="password" name="password" type="password" placeholder="Enter password" [(ngModel)]="password" required>
+        <input class="form-control" id="password" name="password" type="password" placeholder="Enter password"
+               formControlName="password">
       </div>
       <div id="buttons">
-        <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="loginForm.form.invalid">Login</button>
+        <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="!form.valid">Login</button>
       </div>
     </form>
   </div>

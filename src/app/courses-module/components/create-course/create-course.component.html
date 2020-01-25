@@ -1,23 +1,13 @@
 <app-breadcrumb [links]="breadcrumbLinks"></app-breadcrumb>
 <div id="new-course">
   <div id="new-course-form">
-    <form name="newCourse" (ngSubmit)="createCourse(newCourse)" #newCourse="ngForm">
-      <label for="title">Title: </label>
-      <input class="form-control" id="title" name="name" type="text" ngModel required> <br>
-
-      <label for="description">Description: </label>
-      <textarea class="form-control" id="description" name="description" type="text" ngModel required></textarea> <br>
-
-      <label for="date">Date: </label>
-      <input class="form-control" id="date" name="date" type="datetime-local" ngModel required> <br>
-
-      <label for="duration">Duration: </label>
-      <input class="form-control" id="duration" name="length" type="number" ngModel required>
-      <label id="duration-view">{{newCourse?.length | duration}} </label> <br> <br>
-
-      <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="newCourse.form.invalid">
-        Save
-      </button>
+    <form [formGroup]="form" (ngSubmit)="createCourse()">
+      <app-title formControlName="name" [control]="form.get('name')"></app-title>
+      <app-description formControlName="description" [control]="form.get('description')"></app-description>
+      <app-date formControlName="date" [control]="form.get('date')"></app-date>
+      <app-duration formControlName="length" [control]="form.get('length')"></app-duration>
+      <app-authors [authors]="authorForms"></app-authors>
+      <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="!form.valid">Save</button>
       <button id="cancel-button" class="btn btn-sm btn-success" type="button" (click)="goBack()">Cancel</button>
     </form>
   </div>
