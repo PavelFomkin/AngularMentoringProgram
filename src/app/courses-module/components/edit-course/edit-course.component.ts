@@ -8,6 +8,7 @@ import {GetCourseAction, SetEditableCourseAction, UpdateEditableCourseAction} fr
 import {filter, take, tap} from 'rxjs/operators';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CourseValidatorService} from '../../services/course-validator.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-course',
@@ -15,19 +16,19 @@ import {CourseValidatorService} from '../../services/course-validator.service';
   styleUrls: ['./edit-course.component.css'],
 })
 export class EditCourseComponent implements OnInit {
-
   private ID_FIELD: string = 'id';
   id: number;
   form: FormGroup;
   error: string;
   breadcrumbLinks: BreadcrumbLink[] = [
-    {title: 'Courses', url: '/courses'},
-    {title: 'course ', url: '/courses/' + this.id},
+    {title: '', url: '/courses'},
+    {title: '', url: '/courses/' + this.id},
   ];
 
   constructor(private activateRouter: ActivatedRoute,
               private store$: Store<CoursesState>,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private translate: TranslateService) {
     this.form = this.formBuilder.group({
       id: [''],
       name: ['', [
@@ -80,6 +81,8 @@ export class EditCourseComponent implements OnInit {
         this.form.patchValue(course);
       }),
     ).subscribe();
+    this.translate.stream('BREAD_CRUMB.COURSES').pipe(tap(value => this.breadcrumbLinks[0].title = value)).subscribe();
+    this.translate.stream('BREAD_CRUMB.COURSE').pipe(tap(value => this.breadcrumbLinks[1].title = value + this.id)).subscribe();
   }
 
   updateCourse() {

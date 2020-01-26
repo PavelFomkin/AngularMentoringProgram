@@ -15,6 +15,7 @@ import {
 import {selectCourses, selectHasMoreCourses} from '../../store/selectors/courses.selector';
 import {debounceTime, distinctUntilChanged, filter, map, tap} from 'rxjs/operators';
 import {FormControl, FormGroup} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-courses',
@@ -22,9 +23,8 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit, OnDestroy {
-  noCoursesTitle: string = 'Courses not found';
   breadcrumbLinks: BreadcrumbLink[] = [
-    {title: 'Courses', url: '/courses'}
+    {title: '', url: '/courses'}
   ];
 
   loadedCourses: Observable<Course[]> = this.store$.select(selectCourses);
@@ -35,7 +35,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   searchSubscription: Subscription;
 
-  constructor(private store$: Store<CoursesState>) {
+  constructor(private store$: Store<CoursesState>,
+              private translate: TranslateService) {
     this.searchForm = new FormGroup({
       search: new FormControl(''),
     });
@@ -52,6 +53,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
       })
     ).subscribe();
     this.searchSubscription = this.searchForm.get('search').valueChanges.subscribe(value => this.searchCourses(value));
+    this.translate.stream('BREAD_CRUMB.COURSES').pipe(tap(value => this.breadcrumbLinks[0].title = value)).subscribe();
 
     this.store$.dispatch(new GetCoursesAction());
   }

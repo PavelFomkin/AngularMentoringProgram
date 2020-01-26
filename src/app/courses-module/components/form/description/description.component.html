@@ -1,4 +1,4 @@
-<label>Description: <span *ngIf="control.touched" class="error">{{error}}</span>
+<label>{{'FORMS.DESCRIPTION' | translate}}: <span *ngIf="control.touched" class="error">{{error}}</span>
   <textarea [ngClass]="error.length > 0 && control.touched ? 'input-error' : ''" class="form-control" id="description"
             type="text" [value]="value" (blur)="onTouched()" (input)="change($event)"></textarea>
 </label>

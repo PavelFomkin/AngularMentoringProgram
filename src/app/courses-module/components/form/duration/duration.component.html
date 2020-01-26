@@ -1,5 +1,5 @@
 <span *ngIf="control.touched" class="error">{{error}}</span>
-<label>Duration:
+<label>{{'SHARED.DURATION' | translate}}:
   <input [ngClass]="error.length > 0 && control.touched ? 'input-error' : ''" class="form-control" id="duration"
          type="text" [value]="value" (blur)="onTouched()" (input)="change($event)">
 </label>

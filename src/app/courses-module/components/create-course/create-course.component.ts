@@ -5,6 +5,8 @@ import {CoursesState} from '../../store/courses.state';
 import {Store} from '@ngrx/store';
 import {SaveNewCourseAction} from '../../store/actions/courses.actions';
 import {CourseValidatorService} from '../../services/course-validator.service';
+import {tap} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-course',
@@ -15,12 +17,13 @@ export class CreateCourseComponent {
   form: FormGroup;
 
   breadcrumbLinks: BreadcrumbLink[] = [
-    {title: 'Courses', url: '/courses'},
-    {title: 'New Course', url: '/courses/new'},
+    {title: '', url: '/courses'},
+    {title: '', url: '/courses/new'},
   ];
 
   constructor(private store$: Store<CoursesState>,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private translate: TranslateService) {
     this.form = this.formBuilder.group({
       id: [''],
       name: ['', [
@@ -44,6 +47,8 @@ export class CreateCourseComponent {
         CourseValidatorService.validateAuthors,
       ]),
     });
+    this.translate.stream('BREAD_CRUMB.COURSES').pipe(tap(value => this.breadcrumbLinks[0].title = value)).subscribe();
+    this.translate.stream('BREAD_CRUMB.NEW_COURSE').pipe(tap(value => this.breadcrumbLinks[1].title = value)).subscribe();
   }
 
   createCourse() {
