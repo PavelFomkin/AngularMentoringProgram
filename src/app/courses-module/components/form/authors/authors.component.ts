@@ -58,6 +58,7 @@ export class AuthorsComponent implements OnInit {
 
   removeAuthor(index: number) {
     this.authors.removeAt(index);
+    this.form.markAsTouched();
   }
 
   getAvailableAuthors($event): void {

@@ -38,6 +38,11 @@ export class DateComponent implements ControlValueAccessor {
     this._checkErrors();
   }
 
+  touch() {
+    this.onTouched();
+    this._checkErrors();
+  }
+
   _checkErrors(): void {
     if (this.control.errors === null) {
       this.error = '';
