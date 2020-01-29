@@ -79,6 +79,7 @@ export class EditCourseComponent implements OnInit {
           );
         });
         this.form.patchValue(course);
+        this.form.markAllAsTouched();
       }),
     ).subscribe();
     this.translate.stream('BREAD_CRUMB.COURSES').pipe(tap(value => this.breadcrumbLinks[0].title = value)).subscribe();
