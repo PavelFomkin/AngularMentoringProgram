@@ -1,0 +1,40 @@
+{
+  "PAGES": {
+    "COURSES": {
+      "TEXT_TO_SEARCH": "Text to search",
+      "ADD_COURSE": "Add course",
+      "EDIT": "Edit",
+      "REMOVE": "Remove",
+      "LOAD_MORE": "LOAD_MORE",
+      "NO_COURSES_FOUND": "Courses not found"
+    },
+    "LOGIN": {
+      "LOGIN": "Login",
+      "EMAIL": "Email",
+      "ENTER_EMAIL": "Enter e-mail",
+      "PASSWORD": "Password",
+      "ENTER_PASSWORD": "Enter password",
+      "REQUIRED": "required"
+    }
+  },
+  "HEADER": {
+    "LOG_IN": "Log in",
+    "LOG_OUT": "Log out"
+  },
+  "BREAD_CRUMB": {
+    "COURSES": "Courses",
+    "NEW_COURSE": "New course",
+    "COURSE": "Course "
+  },
+  "SHARED": {
+    "DATE": "Date",
+    "DURATION": "Duration",
+    "SAVE": "Save",
+    "CANCEL": "Cancel"
+  },
+  "FORMS": {
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
+    "AUTHORS": "Authors"
+  }
+}

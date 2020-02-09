@@ -31,10 +31,16 @@ export class DateComponent implements ControlValueAccessor {
 
   writeValue(value: string): void {
     this.value = value ? value : '';
+    this._checkErrors();
   }
 
   change($event): void {
     this.onChange($event.target.value);
+    this._checkErrors();
+  }
+
+  touch() {
+    this.onTouched();
     this._checkErrors();
   }
 

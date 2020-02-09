@@ -1,4 +1,4 @@
 <div id="search-block">
-  <input type="text" placeholder="Text to search" [value]="value" (blur)="onTouched()" id="search"
+  <input type="text" placeholder="{{'PAGES.COURSES.TEXT_TO_SEARCH' | translate}}" [value]="value" (blur)="onTouched()" id="search"
          (input)="onChange($event.target.value)">
 </div>

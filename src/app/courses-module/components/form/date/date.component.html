@@ -1,6 +1,6 @@
 <span *ngIf="control.touched" class="error">{{error}}</span>
-<label>Date (yyyy.MM.dd):
+<label>{{'SHARED.DATE' | translate}} (yyyy.MM.dd):
   <input [ngClass]="error.length > 0 && control.touched ? 'input-error' : ''" class="form-control" id="date" type="text"
-         [value]="value" (blur)="onTouched()" (input)="change($event)">
+         [value]="value" (blur)="touch()" (input)="change($event)">
 </label>
 <br/>

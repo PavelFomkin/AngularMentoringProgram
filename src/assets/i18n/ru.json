@@ -1,0 +1,40 @@
+{
+  "PAGES": {
+    "COURSES": {
+      "TEXT_TO_SEARCH": "Данные для поиска",
+      "ADD_COURSE": "Добавить курс",
+      "EDIT": "Редактировать",
+      "REMOVE": "Удалить",
+      "LOAD_MORE": "Найти ещё",
+      "NO_COURSES_FOUND": "Курсов по данному запросу не найдено"
+    },
+    "LOGIN": {
+      "LOGIN": "Войти",
+      "EMAIL": "Эл. почта",
+      "ENTER_EMAIL": "Введите эл. почту",
+      "PASSWORD": "Пароль",
+      "ENTER_PASSWORD": "Введите пароль",
+      "REQUIRED": "обязательное"
+    }
+  },
+  "HEADER": {
+    "LOG_IN": "Войти",
+    "LOG_OUT": "Выйти"
+  },
+  "BREAD_CRUMB": {
+    "COURSES": "Курсы",
+    "NEW_COURSE": "Новый курс",
+    "COURSE": "Курс "
+  },
+  "SHARED": {
+    "DATE": "Дата",
+    "DURATION": "Продолжительность",
+    "SAVE": "Сохранить",
+    "CANCEL": "Отмена"
+  },
+  "FORMS": {
+    "TITLE": "Название",
+    "DESCRIPTION": "Описание",
+    "AUTHORS": "Авторы"
+  }
+}

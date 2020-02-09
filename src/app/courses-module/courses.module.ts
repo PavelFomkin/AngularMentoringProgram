@@ -27,6 +27,7 @@ import {DurationComponent} from './components/form/duration/duration.component';
 import {AuthorsComponent} from './components/form/authors/authors.component';
 import {TitleComponent} from './components/form/title/title.component';
 import {DescriptionComponent} from './components/form/description/description.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 const routes = [
   {path: 'courses', component: CoursesComponent},
@@ -65,6 +66,7 @@ const routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    TranslateModule,
   ],
   exports: [
     CoursesComponent,

@@ -7,8 +7,8 @@
       <app-date formControlName="date" [control]="form.get('date')"></app-date>
       <app-duration formControlName="length" [control]="form.get('length')"></app-duration>
       <app-authors [authors]="authorForms"></app-authors>
-      <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="!form.valid">Save</button>
-      <button id="cancel-button" class="btn btn-sm btn-success" type="button" (click)="goBack()">Cancel</button>
+      <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="!form.valid">{{'SHARED.SAVE' | translate}}</button>
+      <button id="cancel-button" class="btn btn-sm btn-success" type="button" (click)="goBack()">{{'SHARED.CANCEL' | translate}}</button>
     </form>
   </div>
 </div>

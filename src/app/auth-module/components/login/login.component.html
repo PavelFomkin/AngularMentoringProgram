@@ -1,22 +1,24 @@
 <div id="login-form-container">
   <div id="login-form">
     <div>
-      <h3 class="auth-form-name">Login</h3>
+      <h3 class="auth-form-name">{{'PAGES.LOGIN.LOGIN' | translate}}</h3>
       <h5 class="error-message">{{error$ | async}}</h5>
     </div>
     <form [formGroup]="form" (ngSubmit)="login()">
       <div class="field">
-        <label for="login">E-mail: </label> <label class="required-label">*required</label>
-        <input class="form-control" id="login" name="login" type="text" placeholder="Enter e-mail"
+        <label for="login">{{'PAGES.LOGIN.EMAIL' | translate}}: </label> <label class="required-label">
+               *{{'PAGES.LOGIN.REQUIRED' | translate}}</label>
+        <input class="form-control" id="login" name="login" type="text" placeholder="{{'PAGES.LOGIN.ENTER_EMAIL' | translate}}"
                formControlName="username">
       </div>
       <div class="field">
-        <label for="password">Password: </label> <label class="required-label">*required</label>
-        <input class="form-control" id="password" name="password" type="password" placeholder="Enter password"
+        <label for="password">{{'PAGES.LOGIN.PASSWORD' | translate}}: </label> <label class="required-label">
+               *{{'PAGES.LOGIN.REQUIRED' | translate}}</label>
+        <input class="form-control" id="password" name="password" type="password" placeholder="{{'PAGES.LOGIN.ENTER_PASSWORD' | translate}}"
                formControlName="password">
       </div>
       <div id="buttons">
-        <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="!form.valid">Login</button>
+        <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="!form.valid">{{'PAGES.LOGIN.LOGIN' | translate}}</button>
       </div>
     </form>
   </div>

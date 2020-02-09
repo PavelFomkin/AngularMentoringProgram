@@ -8,6 +8,7 @@ import {authReducer} from './store/reducers/auth.reducer';
 import {AuthEffects} from './store/effects/auth.effect';
 import {EffectsModule} from '@ngrx/effects';
 import {authState} from './store/selectors/auth.selector';
+import {TranslateModule} from '@ngx-translate/core';
 
 const routes = [
   {path: 'login', component: LoginComponent},
@@ -24,6 +25,7 @@ const routes = [
     EffectsModule.forRoot([AuthEffects]),
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   exports: [
     LoginComponent,
