@@ -1,9 +1,12 @@
 import {Component} from '@angular/core';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
-import {NgForm} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CoursesState} from '../../store/courses.state';
 import {Store} from '@ngrx/store';
 import {SaveNewCourseAction} from '../../store/actions/courses.actions';
+import {CourseValidatorService} from '../../services/course-validator.service';
+import {tap} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-course',
@@ -11,19 +14,52 @@ import {SaveNewCourseAction} from '../../store/actions/courses.actions';
   styleUrls: ['./create-course.component.css']
 })
 export class CreateCourseComponent {
-
-  constructor(private store$: Store<CoursesState>) { }
+  form: FormGroup;
 
   breadcrumbLinks: BreadcrumbLink[] = [
-    {title: 'Courses', url: '/courses'},
-    {title: 'New Course', url: '/courses/new'},
+    {title: '', url: '/courses'},
+    {title: '', url: '/courses/new'},
   ];
 
-  createCourse(newCourse: NgForm) {
-    this.store$.dispatch(new SaveNewCourseAction(newCourse.form.value));
+  constructor(private store$: Store<CoursesState>,
+              private formBuilder: FormBuilder,
+              private translate: TranslateService) {
+    this.form = this.formBuilder.group({
+      id: [''],
+      name: ['', [
+        Validators.required,
+        Validators.maxLength(50),
+      ]],
+      description: ['', [
+        Validators.required,
+        Validators.maxLength(500),
+      ]],
+      date: ['', [
+        Validators.required,
+        CourseValidatorService.validateDate,
+      ]],
+      length: ['', [
+        Validators.required,
+        CourseValidatorService.validateDuration,
+      ]],
+      isTopRated: [''],
+      authors: this.formBuilder.array([], [
+        CourseValidatorService.validateAuthors,
+      ]),
+    });
+    this.translate.stream('BREAD_CRUMB.COURSES').pipe(tap(value => this.breadcrumbLinks[0].title = value)).subscribe();
+    this.translate.stream('BREAD_CRUMB.NEW_COURSE').pipe(tap(value => this.breadcrumbLinks[1].title = value)).subscribe();
+  }
+
+  createCourse() {
+    this.store$.dispatch(new SaveNewCourseAction(this.form.value));
   }
 
   goBack() {
     history.back();
+  }
+
+  get authorForms() {
+    return this.form.get('authors') as FormArray;
   }
 }

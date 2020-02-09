@@ -1,25 +1,14 @@
 <app-breadcrumb [links]="breadcrumbLinks"></app-breadcrumb>
 <div id="new-course">
   <div id="new-course-form">
-    <form *ngIf="(course | async) as editableCourse" name="editableCourse" (ngSubmit)="updateCourse(editableCourse)">
-      <label for="title">Title: </label>
-      <input class="form-control" id="title" name="name" type="text" [(ngModel)]="editableCourse.name" required> <br>
-
-      <label for="description">Description: </label>
-      <textarea class="form-control" id="description" name="description" type="text" [(ngModel)]="editableCourse.description" required></textarea> <br>
-
-      <label for="date">Date: </label>
-      <input class="form-control" id="date" name="date" type="datetime-local" [ngModel]="editableCourse.date | date:'yyyy-MM-ddTHH:mm'"
-             (ngModelChange)="editableCourse.date = $event" required> <br>
-
-      <label for="duration">Duration: </label>
-      <input class="form-control" id="duration" name="length" type="number" [(ngModel)]="editableCourse.length" required>
-      <label id="duration-view">{{editableCourse?.length | duration}} </label> <br> <br>
-
-      <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="false">
-        Save
-      </button>
-      <button id="cancel-button" class="btn btn-sm btn-success" type="button" (click)="goBack()">Cancel</button>
+    <form [formGroup]="form" (ngSubmit)="updateCourse()">
+      <app-title formControlName="name" [control]="form.get('name')"></app-title>
+      <app-description formControlName="description" [control]="form.get('description')"></app-description>
+      <app-date formControlName="date" [control]="form.get('date')"></app-date>
+      <app-duration formControlName="length" [control]="form.get('length')"></app-duration>
+      <app-authors [authors]="authorForms"></app-authors>
+      <button id="submit-button" type="submit" class="btn btn-sm btn-success" [disabled]="!form.valid">{{'SHARED.SAVE' | translate}}</button>
+      <button id="cancel-button" class="btn btn-sm btn-success" type="button" (click)="goBack()">{{'SHARED.CANCEL' | translate}}</button>
     </form>
   </div>
 </div>

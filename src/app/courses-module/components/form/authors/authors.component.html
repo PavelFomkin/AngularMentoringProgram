@@ -1,0 +1,16 @@
+<span *ngIf="form.touched" class="error">{{authors.controls.length < 1 ? authors.errors.length : ''}}</span>
+<label>{{'FORMS.AUTHORS' | translate}}: </label>
+<form [formGroup]="form">
+  <div id="available-authors-block">
+    <app-author *ngFor="let author of availableAuthors$ | async" [author]="author"
+                (click)="addAuthor(author)"></app-author>
+  </div>
+  <input [ngClass]="authors.controls.length < 1 && form.touched ? 'input-error' : ''" class="form-control" type="text"
+         (blur)="resetAvailableAuthors()" (keyup)="getAvailableAuthors($event.target)" formControlName="authorSearchData">
+</form>
+<div>
+  <div class="authors" *ngFor="let author of authors.controls; let i=index">
+    <app-author [author]="author.value" (click)="removeAuthor(i)"></app-author>
+  </div>
+</div>
+<br/>

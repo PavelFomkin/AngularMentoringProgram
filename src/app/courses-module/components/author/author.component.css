@@ -1,0 +1,19 @@
+.author-frame {
+  background-color: lightblue;
+  padding: 5px;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.author-frame label {
+  margin: 0;
+}
+
+.author-frame:hover {
+  background-color: lightskyblue;
+}
+
+.author-frame label:hover {
+  cursor: pointer;
+}

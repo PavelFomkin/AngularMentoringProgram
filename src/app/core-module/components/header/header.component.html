@@ -2,17 +2,23 @@
   <a id="logo" routerLink="">
     <img src="/assets/images/logo.png" alt="Logo">
   </a>
+  <form [formGroup]="form">
+    <select formControlName="lang" (change)="this.translate.use(this.form.get('lang').value);" [value]="translate.currentLang">
+      <option value="en">Eng</option>
+      <option value="ru">Ru</option>
+    </select>
+  </form>
   <nav class="header-nav" *ngIf="isLoggedIn() | async; else noAuth">
     <a id="userNameEl">
       <img class="smallIcon" src="/assets/images/user.png" alt=""/><span>{{getCurrentUser() | async}}</span>
     </a>
     <a id="signOutEl" (click)="signOut()" routerLink="login">
-      <img class="smallIcon" src="/assets/images/logout.png" alt=""/><span>Log Out</span>
+      <img class="smallIcon" src="/assets/images/logout.png" alt=""/><span>{{'HEADER.LOG_OUT' | translate}}</span>
     </a>
   </nav>
   <ng-template #noAuth>
     <nav class="header-nav">
-      <a id="loginEl" routerLink="login"><img class="smallIcon" src="/assets/images/login.png" alt=""/><span>Log In</span>
+      <a id="loginEl" routerLink="login"><img class="smallIcon" src="/assets/images/login.png" alt=""/><span>{{'HEADER.LOG_IN' | translate}}</span>
       </a>
     </nav>
   </ng-template>
