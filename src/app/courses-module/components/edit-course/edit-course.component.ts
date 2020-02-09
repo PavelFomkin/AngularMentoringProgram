@@ -1,59 +1,100 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
-import {Course} from '../../models/course';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {CoursesState} from '../../store/courses.state';
+import {Store} from '@ngrx/store';
+import {selectCourse, selectEditableCourse} from '../../store/selectors/courses.selector';
+import {GetCourseAction, SetEditableCourseAction, UpdateEditableCourseAction} from '../../store/actions/courses.actions';
+import {filter, take, tap} from 'rxjs/operators';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CourseValidatorService} from '../../services/course-validator.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-course',
   templateUrl: './edit-course.component.html',
-  styleUrls: ['./edit-course.component.css']
+  styleUrls: ['./edit-course.component.css'],
 })
-export class EditCourseComponent implements OnInit, OnDestroy {
-
+export class EditCourseComponent implements OnInit {
   private ID_FIELD: string = 'id';
-  private subscription: Subscription;
-  private course: Course;
-
+  id: number;
+  form: FormGroup;
+  error: string;
   breadcrumbLinks: BreadcrumbLink[] = [
-    {title: 'Courses', url: '/courses'},
-    {title: 'course ', url: '/courses/:id'},
+    {title: '', url: '/courses'},
+    {title: '', url: '/courses/' + this.id},
   ];
 
   constructor(private activateRouter: ActivatedRoute,
-              private httpClient: HttpClient,
-              private router: Router) {
+              private store$: Store<CoursesState>,
+              private formBuilder: FormBuilder,
+              private translate: TranslateService) {
+    this.form = this.formBuilder.group({
+      id: [''],
+      name: ['', [
+        Validators.required,
+        Validators.maxLength(50),
+      ]],
+      description: ['', [
+        Validators.required,
+        Validators.maxLength(500),
+      ]],
+      date: ['', [
+        Validators.required,
+        CourseValidatorService.validateDate,
+      ]],
+      length: ['', [
+        Validators.required,
+        CourseValidatorService.validateDuration,
+      ]],
+      isTopRated: [''],
+      authors: this.formBuilder.array([], [
+        CourseValidatorService.validateAuthors,
+      ]),
+    });
   }
 
   ngOnInit(): void {
-    const param: number = this.activateRouter.snapshot.params[this.ID_FIELD];
-
-    this.subscription = this.httpClient.get<Course>('http://localhost:3004/courses/' + param)
-      .subscribe((course: Course) => {
-        this.course = course;
-        this.breadcrumbLinks[1].title += course.id.toString();
-      });
+    this.id = this.activateRouter.snapshot.params[this.ID_FIELD];
+    this.store$.select(selectCourse(this.id)).pipe(
+      tap(course => {
+        if (!!course) {
+          this.store$.dispatch(new SetEditableCourseAction(course));
+        } else {
+          this.store$.dispatch(new GetCourseAction(this.id));
+        }
+      }),
+    ).subscribe();
+    this.store$.select(selectEditableCourse).pipe(
+      filter(course => !!course),
+      take(1),
+      tap(course => {
+        course.authors.forEach(author => {
+          this.authorForms.push(
+            this.formBuilder.group({
+              id: [author.id],
+              name: [author.name],
+              lastName: [author.lastName],
+            })
+          );
+        });
+        this.form.patchValue(course);
+        this.form.markAllAsTouched();
+      }),
+    ).subscribe();
+    this.translate.stream('BREAD_CRUMB.COURSES').pipe(tap(value => this.breadcrumbLinks[0].title = value)).subscribe();
+    this.translate.stream('BREAD_CRUMB.COURSE').pipe(tap(value => this.breadcrumbLinks[1].title = value + this.id)).subscribe();
   }
 
   updateCourse() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    };
-    this.httpClient.patch<Course>('http://localhost:3004/courses/' + this.course.id, this.course, httpOptions)
-      .subscribe((course: Course) => {
-        console.log(course);
-      });
-    this.router.navigateByUrl('/courses');
+    this.store$.dispatch(new UpdateEditableCourseAction(this.form.value));
   }
 
   goBack() {
     history.back();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  get authorForms() {
+    return this.form.get('authors') as FormArray;
   }
 }

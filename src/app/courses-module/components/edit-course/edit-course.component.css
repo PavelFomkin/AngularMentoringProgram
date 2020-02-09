@@ -4,6 +4,7 @@ label {
 
 #new-course {
   position: relative;
+  top: 64px;
   padding-bottom: 64px;
 }
 
@@ -14,23 +15,6 @@ label {
   box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
   background-color: #ffffff;
   min-width: 470px;
-}
-
-#description {
-  min-height: 150px;
-}
-
-#date, #duration {
-  width: 300px;
-}
-
-#duration {
-  display: inline-block;
-}
-
-#duration-view {
-  display: inline-block;
-  padding-left: 20px;
 }
 
 #cancel-button {

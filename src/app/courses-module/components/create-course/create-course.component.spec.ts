@@ -3,8 +3,8 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CreateCourseComponent} from './create-course.component';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {DurationPipe} from "../../pipes/duration-pipe/duration-pipe.pipe";
-import {RouterTestingModule} from "@angular/router/testing";
+import {DurationPipe} from '../../pipes/duration-pipe/duration-pipe.pipe';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('EditCourseComponent', () => {
   let component: CreateCourseComponent;

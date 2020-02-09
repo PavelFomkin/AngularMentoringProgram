@@ -1,17 +1,32 @@
-import {Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, forwardRef} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrls: ['./search.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SearchComponent),
+      multi: true,
+    },
+  ]
 })
-export class SearchComponent {
+export class SearchComponent implements ControlValueAccessor {
+  value: string;
+  onChange: (value) => void;
+  onTouched: () => void;
 
-  searchData: string;
-  @Output() search: EventEmitter<string> = new EventEmitter();
-
-  searchCourses(): void {
-    this.search.emit(this.searchData);
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
   }
 
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  writeValue(value: string): void {
+    this.value = value ? value : '';
+  }
 }

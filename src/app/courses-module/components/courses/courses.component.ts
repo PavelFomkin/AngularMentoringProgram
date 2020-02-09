@@ -1,71 +1,83 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Course} from '../../models/course';
 import {BreadcrumbLink} from '../../../shared-module/models/breadcrumb-link';
-import {HttpClient} from '@angular/common/http';
+import {Observable, Subject, Subscription} from 'rxjs';
+import {CoursesState} from '../../store/courses.state';
+import {Store} from '@ngrx/store';
+import {
+  GetCoursesAction,
+  GetCoursesBySearchDataAction,
+  GetMoreCoursesAction,
+  RemoveCourseFromBEAction,
+  ResetSearchDataAction,
+  SetSearchDataAction
+} from '../../store/actions/courses.actions';
+import {selectCourses, selectHasMoreCourses} from '../../store/selectors/courses.selector';
+import {debounceTime, distinctUntilChanged, filter, map, tap} from 'rxjs/operators';
+import {FormControl, FormGroup} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css']
 })
-export class CoursesComponent implements OnInit {
-
-  numberOfCoursesToLoad: number = 5;
-  hasMoreCourses: boolean = false;
-  noCoursesTitle: string = 'Courses not found';
-  searchData: string;
-  loadedCourses: Course[];
+export class CoursesComponent implements OnInit, OnDestroy {
   breadcrumbLinks: BreadcrumbLink[] = [
-    {title: 'Courses', url: '/courses'}
+    {title: '', url: '/courses'}
   ];
 
-  constructor(private httpClient: HttpClient) {
+  loadedCourses: Observable<Course[]> = this.store$.select(selectCourses);
+  hasLoadedCourses: Observable<boolean> = this.store$.select(selectCourses)
+    .pipe(map(courses => courses.length > 0));
+  hasMoreCourses: Observable<boolean> = this.store$.select(selectHasMoreCourses);
+  searchSubject = new Subject<string>();
+  searchForm: FormGroup;
+  searchSubscription: Subscription;
+
+  constructor(private store$: Store<CoursesState>,
+              private translate: TranslateService) {
+    this.searchForm = new FormGroup({
+      search: new FormControl(''),
+    });
   }
 
   ngOnInit(): void {
-    this.httpClient.get<Course[]>('http://localhost:3004/courses?start=0&count=' + this.numberOfCoursesToLoad)
-      .subscribe((items: Course[]) => {
-        this.loadedCourses = items;
-        this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
-      });
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      filter(searchDate => searchDate.length >= 3),
+      tap(searchData => {
+        this.store$.dispatch(new SetSearchDataAction(searchData));
+        this.store$.dispatch(new GetCoursesBySearchDataAction(searchData));
+      })
+    ).subscribe();
+    this.searchSubscription = this.searchForm.get('search').valueChanges.subscribe(value => this.searchCourses(value));
+    this.translate.stream('BREAD_CRUMB.COURSES').pipe(tap(value => this.breadcrumbLinks[0].title = value)).subscribe();
+
+    this.store$.dispatch(new GetCoursesAction());
   }
 
   removeCourse(id: number) {
     if (confirm('Do you really want to delete this course?')) {
-      this.httpClient.delete<void>('http://localhost:3004/courses' + id)
-        .subscribe(() => {
-          this.loadedCourses = this.loadedCourses.filter(item => item.id !== id);
-        });
+      this.store$.dispatch(new RemoveCourseFromBEAction(id));
     }
   }
 
-  searchCourses(searchData?: string) {
-    this.loadedCourses = [];
-    this.searchData = searchData ? searchData.trim() : '';
-
-    this.httpClient.get<Course[]>('http://localhost:3004/courses?start=0&count=' + this.numberOfCoursesToLoad
-      + '&textFragment=' + this.searchData)
-      .subscribe((items: Course[]) => {
-        this.loadedCourses = items;
-        this.hasMoreCourses = this.numberOfCoursesToLoad <= this.loadedCourses.length;
-      });
+  searchCourses(searchData: string) {
+    if (searchData.length === 0) {
+      this.store$.dispatch(new ResetSearchDataAction());
+      this.store$.dispatch(new GetCoursesAction());
+    } else {
+      this.searchSubject.next(searchData.trim());
+    }
   }
 
   loadMore() {
-    let attributes;
-    if (this.searchData) {
-      attributes = 'start=' + this.loadedCourses.length
-        + '&count=' + this.numberOfCoursesToLoad
-        + '&textFragment=' + this.searchData;
-    } else {
-      attributes = 'start=' + this.loadedCourses.length
-        + '&count=' + this.numberOfCoursesToLoad;
-    }
-    this.httpClient.get<Course[]>('http://localhost:3004/courses?' + attributes)
-      .subscribe((items: Course[]) => {
-        const expectedCountOfCourses = this.loadedCourses.length + this.numberOfCoursesToLoad;
-        this.loadedCourses = [...this.loadedCourses, ...items];
-        this.hasMoreCourses = expectedCountOfCourses <= this.loadedCourses.length;
-      });
+    this.store$.dispatch(new GetMoreCoursesAction());
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubscription.unsubscribe();
   }
 }

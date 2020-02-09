@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ActionsComponent } from './actions.component';
+import {ActionsComponent} from './actions.component';
 import {Router} from '@angular/router';
 import {By} from '@angular/platform-browser';
 

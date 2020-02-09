@@ -1,0 +1,26 @@
+.authors {
+  display: inline;
+}
+
+.authors app-author:hover {
+  color: red;
+  text-decoration: line-through; /* why it doesn't work? */
+}
+
+#available-authors-block {
+  background-color: lightcyan;
+  opacity: 90%;
+  position: absolute;
+  border-radius: 10px;
+  transform: translate(0, -102%);
+  margin-right: 95px;
+}
+
+.error {
+  color: red;
+  float: right;
+}
+
+.input-error {
+  border-left: 5px solid #a94442; /* red */
+}
